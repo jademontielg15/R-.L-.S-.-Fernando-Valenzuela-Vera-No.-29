@@ -1,0 +1,27 @@
+// Organization founding year (used for calculating "años de historia")
+export const ANIO_FUNDACION = 1934;
+
+// Storage bucket names
+export const STORAGE_BUCKET_PDFS = 'pdfs-institucionales';
+
+// PDF settings
+export const PDF_SIGNED_URL_EXPIRY_SECONDS = 60; // 1 minute for security
+
+// Pagination
+export const ITEMS_PER_PAGE = 12;
+
+// Social media links (update with real URLs)
+export const SOCIAL_LINKS = {
+  facebook: 'https://facebook.com/mrglvm',
+  instagram: 'https://instagram.com/mrglvm',
+  twitter: 'https://twitter.com/mrglvm',
+  youtube: 'https://youtube.com/@mrglvm',
+  whatsapp: 'https://wa.me/5215551234567',
+};
+
+// Organization info
+export const ORG_NAME = 'Muy Respetable Gran Logia Valle de México';
+export const ORG_SHORTNAME = 'MRGLVM';
+export const ORG_ADDRESS = 'Valle de México, Mexico';
+export const ORG_PHONE = '+52 (555) 123-4567';
+export const ORG_EMAIL = 'contacto@mrglvm.com.mx';

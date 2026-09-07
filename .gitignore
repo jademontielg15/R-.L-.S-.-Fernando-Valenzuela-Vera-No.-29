@@ -31,5 +31,8 @@ build/
 dist/
 .turbo/
 
+# Supabase CLI local metadata
+supabase/.temp/
+
 # OS
 Thumbs.db

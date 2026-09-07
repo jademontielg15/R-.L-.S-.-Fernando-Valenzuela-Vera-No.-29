@@ -34,11 +34,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/política-de-privacidad-y-protección-de-d*',
-        destination: '/aviso-de-privacidad',
-        permanent: true,
-      },
-      {
         source: '/70',
         destination: '/nosotros',
         permanent: true,

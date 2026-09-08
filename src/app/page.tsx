@@ -7,10 +7,11 @@ export default function Home() {
       <section className="bg-institucional-primario text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="font-serif text-5xl font-bold mb-6">
-            Muy Respetable Gran Logia Valle de México
+            Muy Respetable Gran Logia Valle de México 2
+        
           </h1>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Preservando la tradición masónica, los ideales de fraternidad y la búsqueda de la verdad desde 1934.
+            Preservando la tradición masónica, los ideales de fraternidad y la búsqueda de la verdad desde 2026.
           </p>
           <Link
             href="/ingresa"

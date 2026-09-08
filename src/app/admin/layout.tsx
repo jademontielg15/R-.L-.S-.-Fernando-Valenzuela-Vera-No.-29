@@ -1,13 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
+
+const NAV = [
+  { href: '/admin', label: 'Dashboard', exact: true },
+  { href: '/admin/documentos/nuevo', label: 'Subir Documento', exact: false },
+  { href: '/admin/solicitudes', label: 'Solicitudes', exact: false },
+] as const;
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const supabase = createClient();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -54,62 +62,65 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-700">Verificando sesión...</p>
+      <div className="flex min-h-screen items-center justify-center bg-surface-page">
+        <p className="text-sm text-content-secondary">Verificando sesión...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-institucional-primario text-white shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/admin" className="flex items-center gap-4">
-            <h1 className="font-serif text-2xl font-bold">MRGLVM Admin</h1>
+    <div className="min-h-screen bg-surface-page">
+      <header className="on-inverse bg-navy-900 text-content-inverse">
+        <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-4 py-4">
+          <Link
+            href="/admin"
+            className="font-serif text-xl font-semibold tracking-[-0.02em] transition-colors duration-hover ease-out hover:text-gold-300"
+          >
+            MRGLVM <span className="text-gold-400">Admin</span>
           </Link>
 
-          <div className="flex items-center gap-6">
-            <span className="text-sm text-gray-200">{user?.email}</span>
+          <div className="flex items-center gap-5">
+            <span className="hidden text-sm text-navy-200 sm:inline">{user?.email}</span>
             <Button variant="secondary" size="sm" onClick={handleLogout}>
               Cerrar Sesión
             </Button>
           </div>
         </div>
 
-        {/* Navigation */}
-        <nav className="bg-institucional-primario bg-opacity-80 border-t border-white border-opacity-20">
-          <div className="container mx-auto px-4 flex gap-6 py-3">
-            <Link
-              href="/admin"
-              className="text-white hover:text-institucional-secundario transition font-semibold text-sm"
-            >
-              📊 Dashboard
-            </Link>
-            <Link
-              href="/admin/documentos/nuevo"
-              className="text-white hover:text-institucional-secundario transition font-semibold text-sm"
-            >
-              ➕ Subir Documento
-            </Link>
-            <Link
-              href="/admin/solicitudes"
-              className="text-white hover:text-institucional-secundario transition font-semibold text-sm"
-            >
-              📋 Solicitudes
-            </Link>
+        {/* `bg-opacity-80` sobre el mismo color que el padre no producía ningún
+            cambio visible: la barra de navegación se fundía con la cabecera. */}
+        <nav aria-label="Administración" className="border-t border-navy-700/60 bg-navy-950">
+          <div className="container mx-auto flex flex-wrap items-center gap-1 px-4">
+            {NAV.map((item) => {
+              const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={cn(
+                    'relative py-3.5 pr-5 text-sm transition-colors duration-hover ease-out',
+                    'after:absolute after:inset-x-0 after:bottom-0 after:mr-5 after:h-px after:bg-gold-400',
+                    active
+                      ? 'text-content-inverse after:scale-x-100'
+                      : 'text-navy-200 after:scale-x-0 hover:text-content-inverse'
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
             <Link
               href="/"
-              className="text-white hover:text-institucional-secundario transition font-semibold text-sm ml-auto"
+              className="ml-auto py-3.5 text-sm text-navy-200 transition-colors duration-hover ease-out hover:text-content-inverse"
             >
-              👁️ Ver Sitio
+              Ver Sitio
             </Link>
           </div>
         </nav>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">{children}</main>
+      <main className="container mx-auto px-4 py-10">{children}</main>
     </div>
   );
 }

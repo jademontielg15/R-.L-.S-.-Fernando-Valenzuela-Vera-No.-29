@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { Hero } from '@/components/Hero';
 import { ListaDocumentosPDF } from '@/components/revista/ListaDocumentosPDF';
-import { Card } from '@/components/ui/Card';
+import { buttonStyles } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
   title: 'Revista Institucional | MRGLVM',
@@ -21,46 +22,40 @@ export default function RevistaPage() {
         backgroundDark={true}
       />
 
-      <section className="py-16 container mx-auto px-4">
-        <div className="max-w-3xl mx-auto mb-12">
-          <Card variant="bordered" className="bg-institucional-fondo">
-            <h2 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              Acceso a Documentos
-            </h2>
-            <p className="text-gray-700 mb-4">
-              A continuación encontrarás todas las ediciones de nuestra revista institucional y otros documentos de
-              interés. Puedes navegar cada documento página por página directamente en tu navegador.
-            </p>
-            <div className="bg-white p-4 rounded border-l-4 border-institucional-secundario text-sm text-gray-700">
-              <p>
-                <strong>📄 Nota:</strong> Los documentos se visualizan en modo solo lectura. Si necesitas una copia
-                descargable, por favor contacta a la administración.
-              </p>
-            </div>
-          </Card>
-        </div>
-
-        <div className="mb-12">
-          <h3 className="font-serif text-3xl font-bold text-institucional-primario mb-8">
-            Ediciones Disponibles
-          </h3>
-          <ListaDocumentosPDF />
-        </div>
-
-        <div className="bg-institucional-fondo p-8 rounded-lg text-center border border-institucional-borde">
-          <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-3">
-            ¿No encontraste lo que buscas?
-          </h3>
-          <p className="text-gray-700 mb-6">
-            Si necesitas información sobre alguna publicación específica o tienes sugerencias de documentos que deban
-            ser incluidos, contacta con nosotros.
+      <section className="container mx-auto px-4 py-20 md:py-24">
+        <div className="measure">
+          <h2 className="rule-accent font-serif">Acceso a Documentos</h2>
+          <p className="mt-7 leading-relaxed text-content-secondary">
+            A continuación encontrarás todas las ediciones de nuestra revista institucional y otros documentos de
+            interés. Puedes navegar cada documento página por página directamente en tu navegador.
           </p>
-          <a
-            href="/contacto"
-            className="inline-block bg-institucional-primario text-white px-6 py-2 rounded font-semibold hover:bg-opacity-90 transition"
-          >
+
+          {/* Nota al margen: regla dorada a la izquierda en lugar de una caja
+              blanca dentro de otra caja crema dentro de una tarjeta. */}
+          <aside className="mt-7 border-l border-gold-700 bg-gold-50/60 py-4 pl-5 pr-4 text-sm leading-relaxed text-content-secondary">
+            <strong className="font-medium text-navy-800">Nota:</strong> los documentos se visualizan en
+            modo solo lectura. Si necesitas una copia descargable, por favor contacta a la administración.
+          </aside>
+        </div>
+
+        <div className="mt-16">
+          <h2 className="font-serif">Ediciones Disponibles</h2>
+          <div className="mt-8">
+            <ListaDocumentosPDF />
+          </div>
+        </div>
+
+        <div className="mt-16 flex flex-col items-start gap-6 rounded-md border border-line-subtle bg-surface-sunken p-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-xl">
+            <h3 className="font-serif text-xl text-navy-800">¿No encontraste lo que buscas?</h3>
+            <p className="mt-2 leading-relaxed text-content-secondary">
+              Si necesitas información sobre alguna publicación específica o tienes sugerencias de documentos que deban
+              ser incluidos, contacta con nosotros.
+            </p>
+          </div>
+          <Link href="/contacto" className={buttonStyles({ className: 'shrink-0' })}>
             Contactarnos
-          </a>
+          </Link>
         </div>
       </section>
     </>

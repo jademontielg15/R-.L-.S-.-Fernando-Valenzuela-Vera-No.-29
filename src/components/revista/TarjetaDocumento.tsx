@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
-import { Card } from '@/components/ui/Card';
 
 interface TarjetaDocumentoProps {
   id: string;
@@ -20,47 +19,55 @@ export const TarjetaDocumento: React.FC<TarjetaDocumentoProps> = ({
   numero_edicion,
   paginas,
   categoria,
-}) => {
-  return (
-    <Link href={`/revista/${id}`}>
-      <Card variant="bordered" className="hover:shadow-lg transition h-full cursor-pointer">
-        <div className="flex flex-col gap-4 h-full">
-          {/* Header */}
-          <div>
-            <h3 className="font-semibold text-lg text-institucional-primario line-clamp-2 hover:text-institucional-secundario transition">
-              {titulo}
-            </h3>
-            {categoria && (
-              <p className="text-sm text-institucional-secundario font-semibold mt-2">
-                {categoria}
-              </p>
-            )}
-          </div>
+}) => (
+  // El enlace es ahora el propio contenedor con `group`: antes el hover del
+  // título estaba declarado en el <h3>, así que solo se activaba al pasar por
+  // encima del texto y no al pasar por la tarjeta.
+  <Link
+    href={`/revista/${id}`}
+    className="group flex h-full flex-col rounded-md border border-line-subtle bg-surface-raised p-6 transition-[transform,border-color,box-shadow] duration-hover ease-out hover:-translate-y-0.5 hover:border-line hover:shadow-lg active:translate-y-0 active:scale-[0.995] active:duration-press"
+  >
+    {categoria && <p className="text-eyebrow uppercase text-gold-700">{categoria}</p>}
 
-          {/* Descripción */}
-          {descripcion && (
-            <p className="text-sm text-gray-600 line-clamp-3 flex-grow">{descripcion}</p>
-          )}
+    <h3 className="mt-3 line-clamp-2 font-serif text-lg text-navy-800 transition-colors duration-hover ease-out group-hover:text-gold-700">
+      {titulo}
+    </h3>
 
-          {/* Metadatos */}
-          <div className="space-y-2 border-t border-institucional-borde pt-4">
-            <div className="flex justify-between text-sm text-gray-700">
-              <span>📅 {formatDate(fecha_publicacion)}</span>
-              {paginas && <span>📄 {paginas} págs</span>}
-            </div>
-            {numero_edicion && (
-              <p className="text-sm text-gray-600">Edición #{numero_edicion}</p>
-            )}
-          </div>
+    {descripcion && (
+      <p className="mt-3 line-clamp-3 flex-grow text-sm leading-relaxed text-content-secondary">
+        {descripcion}
+      </p>
+    )}
 
-          {/* CTA */}
-          <div className="pt-4 border-t border-institucional-borde">
-            <span className="text-sm font-semibold text-institucional-primario hover:text-institucional-secundario transition">
-              Ver documento →
-            </span>
-          </div>
+    <dl className="mt-6 space-y-1.5 border-t border-line-subtle pt-4 text-sm text-content-muted">
+      <div className="flex justify-between gap-4">
+        <dt className="sr-only">Fecha de publicación</dt>
+        <dd>{formatDate(fecha_publicacion)}</dd>
+        {paginas && (
+          <>
+            <dt className="sr-only">Páginas</dt>
+            <dd className="tabular-nums">{paginas} págs</dd>
+          </>
+        )}
+      </div>
+      {numero_edicion && (
+        <div>
+          <dt className="sr-only">Edición</dt>
+          <dd className="tabular-nums">Edición #{numero_edicion}</dd>
         </div>
-      </Card>
-    </Link>
-  );
-};
+      )}
+    </dl>
+
+    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-navy-800 transition-colors duration-hover ease-out group-hover:text-gold-700">
+      Ver documento
+      {/* La flecha avanza un par de píxeles en hover: confirma la dirección del
+          gesto sin mover la tarjeta entera. */}
+      <span
+        aria-hidden="true"
+        className="transition-transform duration-hover ease-out group-hover:translate-x-0.5"
+      >
+        &rarr;
+      </span>
+    </span>
+  </Link>
+);

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import { VisorPDF } from '@/components/revista/VisorPDF';
-import { Card } from '@/components/ui/Card';
+import { buttonStyles } from '@/components/ui/Button';
 import Link from 'next/link';
 
 interface PageProps {
@@ -66,73 +66,64 @@ export default async function DocumentoPage({ params }: PageProps) {
     notFound();
   }
 
+  const metadatos = [
+    { etiqueta: 'Categoría', valor: documento.categorias?.nombre || 'Sin categoría' },
+    {
+      etiqueta: 'Fecha de publicación',
+      valor: new Date(documento.fecha_publicacion).toLocaleDateString('es-MX', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }),
+    },
+    documento.numero_edicion
+      ? { etiqueta: 'Edición', valor: `#${documento.numero_edicion}` }
+      : null,
+    documento.paginas ? { etiqueta: 'Páginas', valor: String(documento.paginas) } : null,
+  ].filter(Boolean) as { etiqueta: string; valor: string }[];
+
   return (
-    <div className="min-h-screen bg-institucional-fondo">
-      {/* Header */}
-      <section className="bg-institucional-primario text-white py-8">
-        <div className="container mx-auto px-4">
-          <Link href="/revista" className="text-gray-200 hover:text-white transition mb-4 inline-block">
-            ← Volver a Revista
+    <div className="bg-surface-page">
+      <section className="on-inverse border-b border-navy-700/60 bg-navy-900 text-content-inverse">
+        <div className="container mx-auto px-4 py-12">
+          <Link
+            href="/revista"
+            className="inline-flex items-center gap-2 text-sm text-navy-200 transition-colors duration-hover ease-out hover:text-content-inverse"
+          >
+            <span aria-hidden="true">&larr;</span>
+            Volver a Revista
           </Link>
-          <h1 className="font-serif text-4xl font-bold">{documento.titulo}</h1>
+          <h1 className="mt-6 max-w-3xl font-serif text-content-inverse">{documento.titulo}</h1>
+          <div className="mt-6 h-px w-16 bg-gold-400" />
         </div>
       </section>
 
-      {/* Contenido Principal */}
-      <section className="py-12 container mx-auto px-4 max-w-4xl">
-        {/* Metadatos */}
-        <Card variant="bordered" className="mb-8 bg-white">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <p className="text-sm text-gray-600 font-semibold">CATEGORÍA</p>
-              <p className="text-lg text-institucional-primario font-semibold">
-                {documento.categorias?.nombre || 'Sin categoría'}
-              </p>
+      <section className="container mx-auto max-w-4xl px-4 py-14">
+        {/* Los metadatos eran cuatro bloques sueltos en una tarjeta; como lista
+            de definiciones con separadores hairline se leen como una ficha. */}
+        <dl className="grid grid-cols-1 divide-y divide-line-subtle overflow-hidden rounded-md border border-line-subtle bg-surface-raised sm:grid-cols-2 sm:divide-y-0 sm:[&>*:nth-child(n+3)]:border-t">
+          {metadatos.map((item) => (
+            <div key={item.etiqueta} className="p-5">
+              <dt className="text-eyebrow uppercase text-gold-700">{item.etiqueta}</dt>
+              <dd className="mt-2 text-navy-800">{item.valor}</dd>
             </div>
-            <div>
-              <p className="text-sm text-gray-600 font-semibold">FECHA DE PUBLICACIÓN</p>
-              <p className="text-lg text-institucional-primario font-semibold">
-                {new Date(documento.fecha_publicacion).toLocaleDateString('es-MX', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </p>
-            </div>
-            {documento.numero_edicion && (
-              <div>
-                <p className="text-sm text-gray-600 font-semibold">EDICIÓN</p>
-                <p className="text-lg text-institucional-primario font-semibold">#{documento.numero_edicion}</p>
-              </div>
-            )}
-            {documento.paginas && (
-              <div>
-                <p className="text-sm text-gray-600 font-semibold">PÁGINAS</p>
-                <p className="text-lg text-institucional-primario font-semibold">{documento.paginas}</p>
-              </div>
-            )}
-          </div>
-        </Card>
+          ))}
+        </dl>
 
-        {/* Descripción */}
         {documento.descripcion && (
-          <Card variant="bordered" className="mb-8 bg-white">
-            <p className="text-gray-700 leading-relaxed">{documento.descripcion}</p>
-          </Card>
+          <p className="measure mt-10 leading-relaxed text-content-secondary">
+            {documento.descripcion}
+          </p>
         )}
 
-        {/* Visor PDF */}
-        <div className="mb-12">
+        <div className="mt-12">
           <VisorPDF documentoId={documento.id} titulo={documento.titulo} />
         </div>
 
-        {/* Navegación */}
-        <div className="flex justify-center gap-4">
-          <Link
-            href="/revista"
-            className="inline-block bg-institucional-primario text-white px-6 py-3 rounded font-semibold hover:bg-opacity-90 transition"
-          >
-            ← Volver a Hemeroteca
+        <div className="mt-12 border-t border-line-subtle pt-10">
+          <Link href="/revista" className={buttonStyles({ variant: 'outline' })}>
+            <span aria-hidden="true">&larr;</span>
+            Volver a Hemeroteca
           </Link>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface SeccionImagenTextoProps {
   titulo: string;
@@ -17,44 +18,51 @@ export const SeccionImagenTexto: React.FC<SeccionImagenTextoProps> = ({
   imagenAlt,
   invertir = false,
   puntos = [],
-}) => {
-  return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-12 items-center ${invertir ? 'md:grid-flow-dense' : ''}`}>
-          {/* Imagen */}
-          <div className={invertir ? 'md:col-start-2' : ''}>
-            <div className="relative w-full aspect-video">
-              <Image
-                src={imagenUrl}
-                alt={imagenAlt}
-                fill
-                className="object-cover rounded-lg"
-              />
-            </div>
-          </div>
-
-          {/* Texto */}
-          <div className={invertir ? 'md:col-start-1' : ''}>
-            <h2 className="font-serif text-4xl font-bold text-institucional-primario mb-6">
-              {titulo}
-            </h2>
-            <p className="text-gray-700 text-lg mb-6 leading-relaxed">
-              {descripcion}
-            </p>
-            {puntos.length > 0 && (
-              <ul className="space-y-3">
-                {puntos.map((punto, idx) => (
-                  <li key={idx} className="flex gap-3 text-gray-700">
-                    <span className="text-institucional-secundario font-bold">•</span>
-                    <span>{punto}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
+}) => (
+  <section className="py-20 md:py-24">
+    <div className="container mx-auto px-4">
+      <div
+        className={cn(
+          'grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16',
+          invertir && 'md:grid-flow-dense'
+        )}
+      >
+        <div className={invertir ? 'md:col-start-2' : ''}>
+          <div className="relative aspect-video w-full overflow-hidden rounded-md border border-line-subtle">
+            <Image
+              src={imagenUrl}
+              alt={imagenAlt}
+              fill
+              // Sin `sizes`, next/image asume 100vw y descarga una imagen del
+              // ancho del viewport para un hueco que nunca pasa de media columna.
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
           </div>
         </div>
+
+        <div className={invertir ? 'md:col-start-1' : ''}>
+          <h2 className="rule-accent font-serif">{titulo}</h2>
+          <p className="measure mt-7 text-lg leading-relaxed text-content-secondary">
+            {descripcion}
+          </p>
+
+          {puntos.length > 0 && (
+            <ul className="mt-8 space-y-3">
+              {puntos.map((punto, idx) => (
+                <li key={idx} className="flex gap-3 text-content-secondary">
+                  {/* Un guion largo dorado en vez de una viñeta en negrita:
+                      el acento marca el ritmo sin gritar. */}
+                  <span aria-hidden="true" className="select-none text-gold-700">
+                    —
+                  </span>
+                  <span>{punto}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);

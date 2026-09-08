@@ -23,17 +23,17 @@ export default function NosotrosPage() {
         subtitle={`La Muy Respetable Gran Logia Valle de México, con ${aniosHistoria} años de tradición masónica.`}
       />
 
-      <section className="py-16 container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          <p className="text-lg text-gray-700 mb-6">
+      <section className="container mx-auto px-4 py-20 md:py-24">
+        <div className="measure space-y-6 text-lg leading-relaxed text-content-secondary">
+          <p>
             Desde nuestra fundación en {ANIO_FUNDACION}, la Muy Respetable Gran Logia Valle de México ha sido un bastión
             de los valores masónicos: fraternidad, tolerancia, verdad y progreso.
           </p>
-          <p className="text-lg text-gray-700 mb-6">
+          <p>
             Con más de una docena de logias activas en el Valle de México, nuestros miembros trabajan incansablemente
             para mejorar la sociedad a través de la educación, la caridad y el mutuo apoyo.
           </p>
-          <p className="text-lg text-gray-700">
+          <p>
             Nos enorgullece contar con miembros de diversas profesiones y orígenes, todos unidos por el compromiso
             de buscar la verdad y contribuir al bienestar de nuestras comunidades.
           </p>

@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Stat } from '@/components/ui/Stat';
 import { formatDate } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 interface Solicitud {
   id: string;
@@ -17,11 +20,22 @@ interface Solicitud {
   revisado: boolean;
 }
 
+type Filtro = 'todas' | 'pendientes' | 'revisadas';
+
+const FILTROS: { valor: Filtro; label: string }[] = [
+  { valor: 'todas', label: 'Todas' },
+  { valor: 'pendientes', label: 'Pendientes' },
+  { valor: 'revisadas', label: 'Revisadas' },
+];
+
+const TH = 'px-4 py-3 text-left text-eyebrow uppercase text-content-muted';
+const TD = 'px-4 py-4 align-middle text-content-secondary';
+
 export default function SolicitudesPage() {
   const supabase = createClient();
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filtro, setFiltro] = useState<'todas' | 'pendientes' | 'revisadas'>('todas');
+  const [filtro, setFiltro] = useState<Filtro>('todas');
 
   useEffect(() => {
     const fetchSolicitudes = async () => {
@@ -85,120 +99,116 @@ export default function SolicitudesPage() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
+    <div className="space-y-10">
       <div>
-        <h1 className="font-serif text-4xl font-bold text-institucional-primario mb-2">
-          Solicitudes de Ingreso
-        </h1>
-        <p className="text-gray-700">Gestiona las solicitudes de ingreso de candidatos</p>
+        <h1 className="font-serif text-3xl text-navy-800">Solicitudes de Ingreso</h1>
+        <p className="mt-2 text-content-secondary">
+          Gestiona las solicitudes de ingreso de candidatos
+        </p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card variant="elevated">
-          <p className="text-gray-600 text-sm font-semibold">TOTAL SOLICITUDES</p>
-          <p className="text-4xl font-bold text-institucional-primario">{solicitudes.length}</p>
-        </Card>
-        <Card variant="elevated">
-          <p className="text-gray-600 text-sm font-semibold">PENDIENTES</p>
-          <p className="text-4xl font-bold text-orange-600">
-            {solicitudes.filter((s) => !s.revisado).length}
-          </p>
-        </Card>
-        <Card variant="elevated">
-          <p className="text-gray-600 text-sm font-semibold">REVISADAS</p>
-          <p className="text-4xl font-bold text-green-600">
-            {solicitudes.filter((s) => s.revisado).length}
-          </p>
-        </Card>
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <Stat label="Total solicitudes" value={solicitudes.length} />
+        <Stat
+          label="Pendientes"
+          value={solicitudes.filter((s) => !s.revisado).length}
+          tone="accent"
+        />
+        <Stat
+          label="Revisadas"
+          value={solicitudes.filter((s) => s.revisado).length}
+          tone="success"
+        />
       </div>
 
-      {/* Filtros */}
-      <div className="flex gap-2">
-        <button
-          onClick={() => setFiltro('todas')}
-          className={`px-4 py-2 rounded font-semibold transition ${
-            filtro === 'todas'
-              ? 'bg-institucional-primario text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          Todas
-        </button>
-        <button
-          onClick={() => setFiltro('pendientes')}
-          className={`px-4 py-2 rounded font-semibold transition ${
-            filtro === 'pendientes'
-              ? 'bg-orange-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          Pendientes
-        </button>
-        <button
-          onClick={() => setFiltro('revisadas')}
-          className={`px-4 py-2 rounded font-semibold transition ${
-            filtro === 'revisadas'
-              ? 'bg-green-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          Revisadas
-        </button>
+      {/* Los tres filtros eran botones sólidos de tres colores distintos, con el
+          mismo peso visual que las acciones reales. Ahora son un segmentado. */}
+      <div
+        role="tablist"
+        aria-label="Filtrar solicitudes"
+        className="inline-flex rounded-md border border-line-subtle bg-surface-raised p-1"
+      >
+        {FILTROS.map((item) => {
+          const activo = filtro === item.valor;
+          return (
+            <button
+              key={item.valor}
+              type="button"
+              role="tab"
+              aria-selected={activo}
+              onClick={() => setFiltro(item.valor)}
+              className={cn(
+                'rounded px-4 py-1.5 text-sm transition-[background-color,color] duration-hover ease-out',
+                activo
+                  ? 'bg-navy-800 text-content-inverse'
+                  : 'text-content-secondary hover:text-navy-800'
+              )}
+            >
+              {item.label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Tabla */}
-      <Card variant="bordered">
+      <div className="overflow-hidden rounded-md border border-line-subtle bg-surface-raised">
         {loading ? (
-          <p className="text-gray-700 py-8 text-center">Cargando solicitudes...</p>
+          <p className="py-16 text-center text-sm text-content-secondary">
+            Cargando solicitudes...
+          </p>
         ) : solicitudes.length === 0 ? (
-          <div className="p-8 bg-institucional-fondo rounded text-center text-gray-700">
-            <p className="font-semibold">No hay solicitudes en esta categoría</p>
-          </div>
+          <p className="px-6 py-16 text-center text-content-secondary">
+            No hay solicitudes en esta categoría
+          </p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-100 border-b-2 border-institucional-borde">
+              <thead className="border-b border-line-subtle bg-surface-sunken">
                 <tr>
-                  <th className="px-4 py-3 text-left font-semibold">Nombre</th>
-                  <th className="px-4 py-3 text-left font-semibold">Email</th>
-                  <th className="px-4 py-3 text-left font-semibold">Teléfono</th>
-                  <th className="px-4 py-3 text-left font-semibold">Profesión</th>
-                  <th className="px-4 py-3 text-left font-semibold">Fecha Solicitud</th>
-                  <th className="px-4 py-3 text-center font-semibold">Estado</th>
-                  <th className="px-4 py-3 text-right font-semibold">Acciones</th>
+                  <th scope="col" className={TH}>Nombre</th>
+                  <th scope="col" className={TH}>Email</th>
+                  <th scope="col" className={TH}>Teléfono</th>
+                  <th scope="col" className={TH}>Profesión</th>
+                  <th scope="col" className={TH}>Fecha Solicitud</th>
+                  <th scope="col" className={`${TH} text-center`}>Estado</th>
+                  <th scope="col" className={`${TH} text-right`}>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-line-subtle">
                 {solicitudes.map((sol) => (
-                  <tr key={sol.id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-4 py-3">
-                      <p className="font-semibold text-institucional-primario">{sol.nombre_completo}</p>
+                  <tr
+                    key={sol.id}
+                    className="transition-colors duration-hover ease-out hover:bg-sand-50"
+                  >
+                    <td className={TD}>
+                      <p className="font-medium text-navy-800">{sol.nombre_completo}</p>
                     </td>
-                    <td className="px-4 py-3 text-gray-700">{sol.email}</td>
-                    <td className="px-4 py-3 text-gray-700">{sol.telefono}</td>
-                    <td className="px-4 py-3 text-gray-700">{sol.profesion}</td>
-                    <td className="px-4 py-3 text-gray-700">{formatDate(sol.creado_en)}</td>
-                    <td className="px-4 py-3 text-center">
-                      <button
-                        onClick={() => toggleRevisado(sol.id, sol.revisado)}
-                        className={`px-3 py-1 rounded font-semibold text-sm transition ${
-                          sol.revisado
-                            ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                            : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
-                        }`}
+                    <td className={TD}>
+                      <a
+                        href={`mailto:${sol.email}`}
+                        className="underline-offset-4 transition-colors duration-hover ease-out hover:text-navy-800 hover:underline"
                       >
-                        {sol.revisado ? '✓ Revisada' : '◉ Pendiente'}
-                      </button>
+                        {sol.email}
+                      </a>
                     </td>
-                    <td className="px-4 py-3 text-right space-x-2">
-                      <button
+                    <td className={TD}>{sol.telefono}</td>
+                    <td className={TD}>{sol.profesion}</td>
+                    <td className={TD}>{formatDate(sol.creado_en)}</td>
+                    <td className={`${TD} text-center`}>
+                      <Badge
+                        tone={sol.revisado ? 'success' : 'pending'}
+                        onClick={() => toggleRevisado(sol.id, sol.revisado)}
+                      >
+                        {sol.revisado ? 'Revisada' : 'Pendiente'}
+                      </Badge>
+                    </td>
+                    <td className={`${TD} text-right`}>
+                      <Button
+                        variant="danger"
+                        size="sm"
                         onClick={() => deleteSolicitud(sol.id)}
-                        className="px-3 py-1 bg-red-100 text-red-700 hover:bg-red-200 rounded font-semibold text-sm transition"
                       >
                         Eliminar
-                      </button>
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -206,7 +216,7 @@ export default function SolicitudesPage() {
             </table>
           </div>
         )}
-      </Card>
+      </div>
     </div>
   );
 }

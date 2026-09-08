@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Las imagenes placeholder del sitio se sirven desde picsum.photos y se
+  // consumen con next/image, que exige declarar el host. Sin esta entrada,
+  // /nosotros y /knights-builders lanzaban 500 al renderizar.
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "picsum.photos" }],
+  },
   redirects: async () => {
     return [
       {

@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
-import { Card } from '@/components/ui/Card';
 
 export const metadata: Metadata = {
   title: 'Aviso de Privacidad | MRGLVM',
@@ -10,33 +9,55 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Ocho tarjetas apiladas convertían un documento legal continuo en ocho cajas
+ * de igual peso. Un aviso de privacidad se lee como documento: numeración,
+ * reglas hairline y una medida de línea cómoda.
+ */
+function Seccion({
+  numero,
+  titulo,
+  children,
+}: {
+  numero: number;
+  titulo: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="border-t border-line-subtle pt-8">
+      <div className="flex items-baseline gap-4">
+        <span className="font-serif text-lg tabular-nums text-gold-700">
+          {String(numero).padStart(2, '0')}
+        </span>
+        <h2 className="font-serif text-xl text-navy-800">{titulo}</h2>
+      </div>
+      <div className="mt-4 space-y-4 leading-relaxed text-content-secondary sm:pl-10">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+const LISTA = 'list-disc space-y-2 pl-5 marker:text-gold-700';
+
 export default function PrivacidadPage() {
   return (
     <>
-      <Hero
-        title="Aviso de Privacidad"
-        subtitle="Conoce cómo protegemos tu información personal"
-      />
+      <Hero title="Aviso de Privacidad" subtitle="Conoce cómo protegemos tu información personal" />
 
-      <section className="py-16 container mx-auto px-4">
-        <div className="max-w-3xl mx-auto space-y-8">
-          <Card variant="bordered">
-            <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              1. Responsable del Tratamiento
-            </h3>
-            <p className="text-gray-700">
+      <article className="container mx-auto px-4 py-20 md:py-24">
+        <div className="measure space-y-10">
+          <Seccion numero={1} titulo="Responsable del Tratamiento">
+            <p>
               La Muy Respetable Gran Logia Valle de México (MRGLVM) es responsable del tratamiento de tus datos
               personales conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares
               (LFPDPPP).
             </p>
-          </Card>
+          </Seccion>
 
-          <Card variant="bordered">
-            <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              2. Datos que Recopilamos
-            </h3>
-            <p className="text-gray-700 mb-4">Recopilamos los siguientes datos personales:</p>
-            <ul className="list-disc list-inside space-y-2 text-gray-700">
+          <Seccion numero={2} titulo="Datos que Recopilamos">
+            <p>Recopilamos los siguientes datos personales:</p>
+            <ul className={LISTA}>
               <li>Nombre completo</li>
               <li>Fecha de nacimiento</li>
               <li>Correo electrónico</li>
@@ -45,77 +66,57 @@ export default function PrivacidadPage() {
               <li>Profesión u ocupación</li>
               <li>Información sobre interés en la masonería</li>
             </ul>
-          </Card>
+          </Seccion>
 
-          <Card variant="bordered">
-            <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              3. Finalidad del Tratamiento
-            </h3>
-            <p className="text-gray-700">
+          <Seccion numero={3} titulo="Finalidad del Tratamiento">
+            <p>
               Utilizamos tus datos para procesar solicitudes de ingreso, mantener comunicación, y gestionar tu
               participación en nuestras actividades e iniciativas. Los datos se tratarán de conformidad con la ley.
             </p>
-          </Card>
+          </Seccion>
 
-          <Card variant="bordered">
-            <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              4. Seguridad de la Información
-            </h3>
-            <p className="text-gray-700">
+          <Seccion numero={4} titulo="Seguridad de la Información">
+            <p>
               Implementamos medidas técnicas y administrativas para proteger tus datos contra daño, pérdida, alteración,
               acceso no autorizado o cualquier otra forma de tratamiento ilícito.
             </p>
-          </Card>
+          </Seccion>
 
-          <Card variant="bordered">
-            <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              5. Derechos del Titular
-            </h3>
-            <p className="text-gray-700 mb-4">Conforme a la LFPDPPP, tienes derecho a:</p>
-            <ul className="list-disc list-inside space-y-2 text-gray-700">
+          <Seccion numero={5} titulo="Derechos del Titular">
+            <p>Conforme a la LFPDPPP, tienes derecho a:</p>
+            <ul className={LISTA}>
               <li>Conocer qué datos tenemos sobre ti (Derecho de Acceso)</li>
               <li>Corregir datos inexactos (Derecho de Rectificación)</li>
               <li>Solicitar la eliminación de datos (Derecho de Cancelación)</li>
               <li>Oponerme al tratamiento de mis datos (Derecho de Oposición)</li>
             </ul>
-          </Card>
+          </Seccion>
 
-          <Card variant="bordered">
-            <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              6. Ejercicio de Derechos
-            </h3>
-            <p className="text-gray-700">
+          <Seccion numero={6} titulo="Ejercicio de Derechos">
+            <p>
               Para ejercer cualquiera de los derechos mencionados, contacta a nuestro Oficial de Privacidad escribiendo
               a contacto@mrglvm.com.mx, indicando claramente tu solicitud y proporcionando prueba de identidad.
             </p>
-          </Card>
+          </Seccion>
 
-          <Card variant="bordered">
-            <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              7. Cambios a esta Política
-            </h3>
-            <p className="text-gray-700">
+          <Seccion numero={7} titulo="Cambios a esta Política">
+            <p>
               Nos reservamos el derecho de actualizar este aviso de privacidad. Cualquier cambio será publicado en esta
               página con una nueva fecha de vigencia.
             </p>
-          </Card>
+          </Seccion>
 
-          <Card variant="bordered">
-            <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-4">
-              8. Contacto
-            </h3>
-            <p className="text-gray-700">
+          <Seccion numero={8} titulo="Contacto">
+            <p>
               Si tienes preguntas sobre esta política de privacidad, contacta a: contacto@mrglvm.com.mx
             </p>
-          </Card>
-        </div>
+          </Seccion>
 
-        <div className="mt-12 p-6 bg-institucional-fondo rounded-lg text-center">
-          <p className="text-sm text-gray-600">
+          <p className="border-t border-line-subtle pt-8 text-sm text-content-muted">
             Última actualización: {new Date().toLocaleDateString('es-MX')}
           </p>
         </div>
-      </section>
+      </article>
     </>
   );
 }

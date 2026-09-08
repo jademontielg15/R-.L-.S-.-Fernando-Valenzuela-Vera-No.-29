@@ -52,13 +52,11 @@ export default function HistoriaPage() {
         subtitle="Desde 1934: un viaje de tradición, educación y fraternidad"
       />
 
-      <section className="py-16 container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <p className="text-lg text-gray-700">
-            La masonería es una fraternidad de hombres libres que busca la verdad, la tolerancia y el progreso moral.
-            En el Valle de México, hemos sido testigos y actores de importantes transformaciones sociales.
-          </p>
-        </div>
+      <section className="container mx-auto px-4 pb-2 pt-20 md:pt-24">
+        <p className="measure text-lg leading-relaxed text-content-secondary">
+          La masonería es una fraternidad de hombres libres que busca la verdad, la tolerancia y el progreso moral.
+          En el Valle de México, hemos sido testigos y actores de importantes transformaciones sociales.
+        </p>
       </section>
 
       <LineaDeTiempo items={eventos} />

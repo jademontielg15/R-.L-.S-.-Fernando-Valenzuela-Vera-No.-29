@@ -3,13 +3,16 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { createAdminClient } from '@/lib/supabase/admin';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
+import { Select } from '@/components/ui/Select';
 import { Checkbox } from '@/components/ui/Checkbox';
-import { Card } from '@/components/ui/Card';
 import { STORAGE_BUCKET_PDFS } from '@/lib/constants';
+
+// Nota: aquí se importaba `createAdminClient` sin llegar a usarlo nunca. Este es
+// un componente `'use client'`, así que arrastraba al bundle del navegador un
+// módulo que su propio comentario declara «NEVER exposed to the browser».
 
 interface FormularioDocumentoProps {
   documentoId?: string;
@@ -134,13 +137,8 @@ export const FormularioDocumento: React.FC<FormularioDocumentoProps> = ({
   };
 
   return (
-    <Card variant="bordered">
-      <h2 className="text-2xl font-bold text-institucional-primario mb-6">
-        {modo === 'crear' ? 'Subir Documento' : 'Editar Documento'}
-      </h2>
-
+    <div className="rounded-md border border-line-subtle bg-surface-raised p-8">
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Título */}
         <Input
           label="Título del Documento *"
           value={titulo}
@@ -150,28 +148,21 @@ export const FormularioDocumento: React.FC<FormularioDocumentoProps> = ({
           disabled={loading}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Categoría */}
-          <div>
-            <label className="block text-sm font-semibold text-institucional-primario mb-2">
-              Categoría
-            </label>
-            <select
-              value={categoriaId}
-              onChange={(e) => setCategoriaId(e.target.value)}
-              className="w-full px-4 py-2 border-2 border-institucional-borde rounded focus:outline-none focus:border-institucional-primario"
-              disabled={loading}
-            >
-              <option value="">-- Seleccionar categoría --</option>
-              {categorias.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.nombre}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <Select
+            label="Categoría"
+            value={categoriaId}
+            onChange={(e) => setCategoriaId(e.target.value)}
+            disabled={loading}
+          >
+            <option value="">-- Seleccionar categoría --</option>
+            {categorias.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.nombre}
+              </option>
+            ))}
+          </Select>
 
-          {/* Número de Edición */}
           <Input
             label="Número de Edición"
             type="number"
@@ -182,7 +173,6 @@ export const FormularioDocumento: React.FC<FormularioDocumentoProps> = ({
           />
         </div>
 
-        {/* Fecha de Publicación */}
         <Input
           label="Fecha de Publicación *"
           type="date"
@@ -192,7 +182,6 @@ export const FormularioDocumento: React.FC<FormularioDocumentoProps> = ({
           disabled={loading}
         />
 
-        {/* Descripción */}
         <Textarea
           label="Descripción"
           value={descripcion}
@@ -202,54 +191,59 @@ export const FormularioDocumento: React.FC<FormularioDocumentoProps> = ({
           disabled={loading}
         />
 
-        {/* Archivo PDF */}
         <div>
-          <label className="block text-sm font-semibold text-institucional-primario mb-2">
+          <label
+            htmlFor="archivo-pdf"
+            className="mb-1.5 block text-sm font-medium text-navy-800"
+          >
             Archivo PDF {modo === 'crear' ? '*' : '(opcional para actualizar)'}
           </label>
+          {/* El input de archivo nativo no acepta los estilos del resto de
+              campos: se estiliza su botón interno con file:* para que al menos
+              comparta tipografía, alto y radio con el sistema. */}
           <input
+            id="archivo-pdf"
             type="file"
             accept=".pdf"
             onChange={(e) => setArchivo(e.target.files?.[0] || null)}
-            className="w-full px-4 py-2 border-2 border-institucional-borde rounded focus:outline-none focus:border-institucional-primario"
+            className="w-full cursor-pointer rounded border border-line bg-surface-raised text-sm text-content-secondary transition-colors duration-hover ease-out hover:border-line-strong/40 file:mr-4 file:cursor-pointer file:border-0 file:border-r file:border-line file:bg-surface-sunken file:px-4 file:py-2.5 file:text-sm file:font-medium file:text-navy-800 disabled:cursor-not-allowed disabled:opacity-60"
             disabled={loading}
             required={modo === 'crear'}
           />
           {archivoExistente && (
-            <p className="text-sm text-gray-600 mt-2">📄 Archivo actual: {archivoExistente}</p>
+            <p className="mt-2 break-all text-sm text-content-muted">
+              Archivo actual: {archivoExistente}
+            </p>
           )}
         </div>
 
-        {/* Visible */}
-        <Checkbox
-          label="Publicar (visible en sitio público)"
-          checked={visible}
-          onChange={(e) => setVisible(e.target.checked)}
-          disabled={loading}
-        />
+        <div className="border-t border-line-subtle pt-6">
+          <Checkbox
+            label="Publicar (visible en sitio público)"
+            checked={visible}
+            onChange={(e) => setVisible(e.target.checked)}
+            disabled={loading}
+          />
+        </div>
 
-        {/* Error */}
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+          <div
+            role="alert"
+            className="rounded border border-danger/30 bg-danger-soft p-4 text-sm text-danger"
+          >
             {error}
           </div>
         )}
 
-        {/* Botones */}
-        <div className="flex gap-4 pt-6 border-t border-institucional-borde">
+        <div className="flex gap-3 border-t border-line-subtle pt-6">
           <Button type="submit" disabled={loading} className="flex-1">
             {loading ? 'Guardando...' : modo === 'crear' ? 'Subir Documento' : 'Guardar Cambios'}
           </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => router.back()}
-            disabled={loading}
-          >
+          <Button type="button" variant="outline" onClick={() => router.back()} disabled={loading}>
             Cancelar
           </Button>
         </div>
       </form>
-    </Card>
+    </div>
   );
 };

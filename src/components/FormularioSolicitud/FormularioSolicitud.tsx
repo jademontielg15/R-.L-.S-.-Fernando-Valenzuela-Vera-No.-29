@@ -7,6 +7,7 @@ import { solicitudIngresoSchema, type SolicitudIngresoInput } from '@/lib/valida
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
+import { Select } from '@/components/ui/Select';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Card } from '@/components/ui/Card';
 
@@ -45,6 +46,20 @@ const ESTADOS_MEXICO = [
   'Zacatecas',
 ];
 
+/**
+ * Bloque de sección del formulario. Antes cada sección era una caja de fondo
+ * crema apilada sobre otra caja de fondo crema: cuatro contenedores anidados
+ * del mismo color, sin jerarquía. Ahora es un `fieldset` con regla superior.
+ */
+function Bloque({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <fieldset className="border-t border-line-subtle pt-7">
+      <legend className="text-eyebrow uppercase text-gold-700">{titulo}</legend>
+      <div className="mt-6 space-y-5">{children}</div>
+    </fieldset>
+  );
+}
+
 export const FormularioSolicitud = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -55,7 +70,6 @@ export const FormularioSolicitud = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm<SolicitudIngresoInput>({
     resolver: zodResolver(solicitudIngresoSchema),
     mode: 'onChange',
@@ -94,173 +108,160 @@ export const FormularioSolicitud = () => {
 
   if (submitSuccess) {
     return (
-      <Card variant="elevated" className="bg-green-50 border-2 border-green-200">
-        <div className="text-center">
-          <h3 className="font-serif text-2xl font-bold text-green-700 mb-2">¡Gracias por tu solicitud!</h3>
-          <p className="text-green-700 mb-4">
-            Hemos recibido tu solicitud de ingreso. Un miembro del Alto Cuerpo se pondrá en contacto contigo
-            en los próximos días para continuar con el proceso.
-          </p>
-          <p className="text-sm text-green-600">
-            Si tienes preguntas, puedes escribirnos a contacto@mrglvm.com.mx
-          </p>
-          <button
-            onClick={() => setSubmitSuccess(false)}
-            className="mt-6 text-green-700 font-semibold hover:underline"
+      <Card variant="elevated" className="animate-fade-up border-success/25">
+        <div className="flex gap-4">
+          <span
+            aria-hidden="true"
+            className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-success/10 text-success"
           >
-            ← Volver
-          </button>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m3 8.5 3.5 3.5L13 5" />
+            </svg>
+          </span>
+          <div>
+            <h3 className="font-serif text-xl text-navy-800">¡Gracias por tu solicitud!</h3>
+            <p className="mt-3 leading-relaxed text-content-secondary">
+              Hemos recibido tu solicitud de ingreso. Un miembro del Alto Cuerpo se pondrá en contacto contigo
+              en los próximos días para continuar con el proceso.
+            </p>
+            <p className="mt-3 text-sm text-content-muted">
+              Si tienes preguntas, puedes escribirnos a contacto@mrglvm.com.mx
+            </p>
+            <Button variant="link" className="mt-5 px-0" onClick={() => setSubmitSuccess(false)}>
+              Volver
+            </Button>
+          </div>
         </div>
       </Card>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {/* Error General */}
       {submitError && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded text-red-700">
+        <div
+          role="alert"
+          className="rounded border border-danger/30 bg-danger-soft p-4 text-sm text-danger"
+        >
           {submitError}
         </div>
       )}
 
-      {/* Sección 1: Datos Personales */}
-      <div className="bg-institucional-fondo p-6 rounded-lg">
-        <h3 className="font-serif text-xl font-bold text-institucional-primario mb-4">
-          Datos Personales
-        </h3>
+      <Bloque titulo="Datos Personales">
+        <Input
+          label="Nombre Completo *"
+          placeholder="Juan Pérez García"
+          {...register('nombre_completo')}
+          error={errors.nombre_completo?.message}
+          disabled={isSubmitting}
+        />
 
-        <div className="space-y-4">
+        <Input
+          label="Fecha de Nacimiento *"
+          type="date"
+          {...register('fecha_nacimiento')}
+          error={errors.fecha_nacimiento?.message}
+          disabled={isSubmitting}
+        />
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <Input
-            label="Nombre Completo *"
-            placeholder="Juan Pérez García"
-            {...register('nombre_completo')}
-            error={errors.nombre_completo?.message}
+            label="Profesión/Ocupación *"
+            placeholder="Ej: Ingeniero, Abogado, etc."
+            {...register('profesion')}
+            error={errors.profesion?.message}
             disabled={isSubmitting}
           />
 
-          <Input
-            label="Fecha de Nacimiento *"
-            type="date"
-            {...register('fecha_nacimiento')}
-            error={errors.fecha_nacimiento?.message}
+          <Select
+            label="Estado de Residencia *"
+            {...register('estado_residencia')}
+            error={errors.estado_residencia?.message}
             disabled={isSubmitting}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              label="Profesión/Ocupación *"
-              placeholder="Ej: Ingeniero, Abogado, etc."
-              {...register('profesion')}
-              error={errors.profesion?.message}
-              disabled={isSubmitting}
-            />
-
-            <div>
-              <label className="block text-sm font-semibold text-institucional-primario mb-2">
-                Estado de Residencia *
-              </label>
-              <select
-                {...register('estado_residencia')}
-                className="w-full px-4 py-2 border-2 border-institucional-borde rounded focus:outline-none focus:border-institucional-primario"
-                disabled={isSubmitting}
-              >
-                <option value="">-- Seleccionar estado --</option>
-                {ESTADOS_MEXICO.map((estado) => (
-                  <option key={estado} value={estado}>
-                    {estado}
-                  </option>
-                ))}
-              </select>
-              {errors.estado_residencia && (
-                <p className="text-red-500 text-sm mt-1">{errors.estado_residencia.message}</p>
-              )}
-            </div>
-          </div>
+          >
+            <option value="">-- Seleccionar estado --</option>
+            {ESTADOS_MEXICO.map((estado) => (
+              <option key={estado} value={estado}>
+                {estado}
+              </option>
+            ))}
+          </Select>
         </div>
-      </div>
+      </Bloque>
 
-      {/* Sección 2: Interés en la Masonería */}
-      <div className="bg-institucional-fondo p-6 rounded-lg">
-        <h3 className="font-serif text-xl font-bold text-institucional-primario mb-4">
-          Tu Interés en la Masonería
-        </h3>
+      <Bloque titulo="Tu Interés en la Masonería">
+        <Textarea
+          label="¿Por qué te interesa ingresar a la masonería? *"
+          placeholder="Cuéntanos sobre tus motivaciones..."
+          rows={5}
+          {...register('interes_ingreso')}
+          error={errors.interes_ingreso?.message}
+          disabled={isSubmitting}
+        />
 
-        <div className="space-y-4">
-          <Textarea
-            label="¿Por qué te interesa ingresar a la masonería? *"
-            placeholder="Cuéntanos sobre tus motivaciones..."
-            rows={5}
-            {...register('interes_ingreso')}
-            error={errors.interes_ingreso?.message}
-            disabled={isSubmitting}
-          />
+        <Textarea
+          label="¿Qué sabes de la masonería? *"
+          placeholder="Comparte lo que conoces sobre nuestra institución..."
+          rows={5}
+          {...register('conocimiento_institucion')}
+          error={errors.conocimiento_institucion?.message}
+          disabled={isSubmitting}
+        />
+      </Bloque>
 
-          <Textarea
-            label="¿Qué sabes de la masonería? *"
-            placeholder="Comparte lo que conoces sobre nuestra institución..."
-            rows={5}
-            {...register('conocimiento_institucion')}
-            error={errors.conocimiento_institucion?.message}
-            disabled={isSubmitting}
-          />
-        </div>
-      </div>
+      <Bloque titulo="Información de Contacto">
+        <Input
+          label="Email *"
+          type="email"
+          placeholder="tu@email.com"
+          {...register('email')}
+          error={errors.email?.message}
+          disabled={isSubmitting}
+        />
 
-      {/* Sección 3: Contacto */}
-      <div className="bg-institucional-fondo p-6 rounded-lg">
-        <h3 className="font-serif text-xl font-bold text-institucional-primario mb-4">
-          Información de Contacto
-        </h3>
+        <Input
+          label="Teléfono/WhatsApp *"
+          placeholder="+52 555 123 4567"
+          {...register('telefono')}
+          error={errors.telefono?.message}
+          disabled={isSubmitting}
+        />
+      </Bloque>
 
-        <div className="space-y-4">
-          <Input
-            label="Email *"
-            type="email"
-            placeholder="tu@email.com"
-            {...register('email')}
-            error={errors.email?.message}
-            disabled={isSubmitting}
-          />
+      <Bloque titulo="Disponibilidad">
+        <p className="text-sm text-content-secondary">
+          ¿Cuándo tienes disponibilidad para reuniones?
+        </p>
+        <Checkbox
+          label="Lunes a Viernes"
+          {...register('disponible_entre_semana')}
+          disabled={isSubmitting}
+        />
+        <Checkbox label="Sábados" {...register('disponible_sabado')} disabled={isSubmitting} />
+      </Bloque>
 
-          <Input
-            label="Teléfono/WhatsApp *"
-            placeholder="+52 555 123 4567"
-            {...register('telefono')}
-            error={errors.telefono?.message}
-            disabled={isSubmitting}
-          />
-        </div>
-      </div>
-
-      {/* Sección 4: Disponibilidad */}
-      <div className="bg-institucional-fondo p-6 rounded-lg">
-        <h3 className="font-serif text-xl font-bold text-institucional-primario mb-4">
-          Disponibilidad
-        </h3>
-
-        <div className="space-y-3">
-          <p className="text-sm text-gray-700 mb-3">¿Cuándo tienes disponibilidad para reuniones?</p>
-          <Checkbox
-            label="Lunes a Viernes"
-            {...register('disponible_entre_semana')}
-            disabled={isSubmitting}
-          />
-          <Checkbox
-            label="Sábados"
-            {...register('disponible_sabado')}
-            disabled={isSubmitting}
-          />
-        </div>
-      </div>
-
-      {/* Sección 5: Consentimientos */}
-      <div className="bg-red-50 p-6 rounded-lg border border-red-200">
-        <h3 className="font-serif text-xl font-bold text-red-700 mb-4">
+      {/*
+        Antes este bloque iba en rojo (bg-red-50 / border-red-200), exactamente
+        el mismo color que los mensajes de error de validación: parecía que algo
+        había fallado antes de tocar nada. Son declaraciones obligatorias, no un
+        error, así que llevan el acento dorado del sistema.
+      */}
+      <fieldset className="rounded-md border border-gold-300 bg-gold-50 p-6">
+        <legend className="text-eyebrow uppercase text-gold-800">
           Declaraciones Obligatorias
-        </h3>
+        </legend>
 
-        <div className="space-y-3">
+        <div className="mt-6 space-y-4">
           <Checkbox
             label="Soy un hombre libre de buenas costumbres *"
             {...register('declara_hombre_libre')}
@@ -275,26 +276,27 @@ export const FormularioSolicitud = () => {
             disabled={isSubmitting}
           />
 
-          <p className="text-xs text-gray-600 mt-2">
+          <p className="text-sm text-content-muted">
             Por favor, revisa nuestro{' '}
-            <a href="/aviso-de-privacidad" className="text-institucional-primario hover:underline">
+            <a
+              href="/aviso-de-privacidad"
+              className="font-medium text-navy-800 underline underline-offset-4 transition-colors duration-hover ease-out hover:text-gold-700"
+            >
               aviso de privacidad
             </a>{' '}
             antes de continuar.
           </p>
         </div>
-      </div>
+      </fieldset>
 
-      {/* Botón Enviar */}
-      <div className="flex gap-4">
-        <Button type="submit" className="flex-1" disabled={isSubmitting}>
+      <div>
+        <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
         </Button>
+        <p className="mt-4 text-center text-sm text-content-muted">
+          * Campos obligatorios. Todos tus datos serán tratados con confidencialidad.
+        </p>
       </div>
-
-      <p className="text-xs text-gray-600 text-center">
-        * Campos obligatorios. Todos tus datos serán tratados con confidencialidad.
-      </p>
     </form>
   );
 };

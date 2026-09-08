@@ -1,7 +1,10 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Hero } from '@/components/Hero';
 import { GaleriaImagenes } from '@/components/GaleriaImagenes';
 import { Card } from '@/components/ui/Card';
+import { buttonStyles } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
   title: 'Knights Builders Grand Chapter | MRGLVM',
@@ -11,6 +14,21 @@ export const metadata: Metadata = {
   },
 };
 
+const PUNTOS = [
+  'Educación continua en principios masónicos',
+  'Desarrollo de habilidades de liderazgo',
+  'Proyectos de beneficencia comunitaria',
+  'Mentoría de hermanos mayores',
+  'Networking y fraternidad',
+];
+
+const VALORES = [
+  { titulo: 'Excelencia', descripcion: 'Comprometidos con la calidad en todo lo que hacemos.' },
+  { titulo: 'Innovación', descripcion: 'Buscamos nuevas formas de impactar positivamente.' },
+  { titulo: 'Integridad', descripcion: 'Actuamos con honestidad y rectitud siempre.' },
+  { titulo: 'Comunidad', descripcion: 'Trabajamos juntos por el bien común.' },
+];
+
 export default function KnightsPage() {
   return (
     <>
@@ -19,74 +37,56 @@ export default function KnightsPage() {
         subtitle="La rama juvenil dedicada al desarrollo de nuevos líderes masónicos"
       />
 
-      <section className="py-16 container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+      <section className="container mx-auto px-4 py-20 md:py-24">
+        <div className="grid max-w-5xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">
           <div>
-            <h2 className="font-serif text-4xl font-bold text-institucional-primario mb-6">
-              Formando Líderes
-            </h2>
-            <p className="text-lg text-gray-700 mb-6">
-              Knights Builders es nuestra organización dedicada a jóvenes masones con espíritu de construcción y progreso.
-              Aquí desarrollamos liderazgo, fraternidad y compromiso comunitario.
-            </p>
-            <p className="text-lg text-gray-700 mb-6">
-              Con programas educativos, actividades sociales y proyectos de impacto comunitario, nuestros Knights trabajan
-              para construir un futuro mejor.
-            </p>
-            <div className="space-y-3">
-              {[
-                'Educación continua en principios masónicos',
-                'Desarrollo de habilidades de liderazgo',
-                'Proyectos de beneficencia comunitaria',
-                'Mentoría de hermanos mayores',
-                'Networking y fraternidad',
-              ].map((item, idx) => (
-                <div key={idx} className="flex gap-3">
-                  <span className="text-institucional-secundario font-bold text-xl">✓</span>
-                  <span className="text-gray-700">{item}</span>
-                </div>
-              ))}
+            <h2 className="rule-accent font-serif">Formando Líderes</h2>
+            <div className="mt-7 space-y-5 text-lg leading-relaxed text-content-secondary">
+              <p>
+                Knights Builders es nuestra organización dedicada a jóvenes masones con espíritu de construcción y progreso.
+                Aquí desarrollamos liderazgo, fraternidad y compromiso comunitario.
+              </p>
+              <p>
+                Con programas educativos, actividades sociales y proyectos de impacto comunitario, nuestros Knights trabajan
+                para construir un futuro mejor.
+              </p>
             </div>
+            <ul className="mt-8 space-y-3">
+              {PUNTOS.map((item) => (
+                <li key={item} className="flex gap-3 text-content-secondary">
+                  <span aria-hidden="true" className="select-none text-gold-700">
+                    —
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="aspect-video relative rounded-lg overflow-hidden shadow-lg">
-            <img
+
+          <div className="relative aspect-video overflow-hidden rounded-md border border-line-subtle">
+            {/* Era un <img> crudo: sin optimización, sin lazy loading y sin
+                dimensiones intrínsecas, así que empujaba el layout al cargar. */}
+            <Image
               src="https://picsum.photos/seed/knights-builders/600/400"
               alt="Knights Builders"
-              className="w-full h-full object-cover"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
             />
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-institucional-fondo">
+      <section className="border-y border-line-subtle bg-surface-sunken py-20 md:py-24">
         <div className="container mx-auto px-4">
-          <h2 className="font-serif text-4xl font-bold text-center text-institucional-primario mb-12">
-            Nuestros Valores
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {[
-              {
-                titulo: 'Excelencia',
-                descripcion: 'Comprometidos con la calidad en todo lo que hacemos.',
-              },
-              {
-                titulo: 'Innovación',
-                descripcion: 'Buscamos nuevas formas de impactar positivamente.',
-              },
-              {
-                titulo: 'Integridad',
-                descripcion: 'Actuamos con honestidad y rectitud siempre.',
-              },
-              {
-                titulo: 'Comunidad',
-                descripcion: 'Trabajamos juntos por el bien común.',
-              },
-            ].map((item, idx) => (
-              <Card key={idx} variant="bordered">
-                <h3 className="font-serif text-2xl font-bold text-institucional-primario mb-3">
-                  {item.titulo}
-                </h3>
-                <p className="text-gray-700 text-sm">{item.descripcion}</p>
+          <h2 className="rule-accent font-serif">Nuestros Valores</h2>
+          <div className="mt-12 grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {VALORES.map((item) => (
+              <Card key={item.titulo}>
+                <h3 className="font-serif text-xl text-navy-800">{item.titulo}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-content-secondary">
+                  {item.descripcion}
+                </p>
               </Card>
             ))}
           </div>
@@ -104,20 +104,15 @@ export default function KnightsPage() {
         columnas={4}
       />
 
-      <section className="py-16 container mx-auto px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-serif text-3xl font-bold text-institucional-primario mb-6">
-            ¿Te gustaría unirte?
-          </h2>
-          <p className="text-lg text-gray-700 mb-8">
+      <section className="container mx-auto px-4 pb-20 md:pb-28">
+        <div className="max-w-2xl">
+          <h2 className="font-serif">¿Te gustaría unirte?</h2>
+          <p className="measure mt-6 text-lg leading-relaxed text-content-secondary">
             Si eres un joven masón o te interesa conocer más sobre nuestras actividades, no dudes en contactarnos.
           </p>
-          <a
-            href="/contacto"
-            className="inline-block bg-institucional-primario text-white px-8 py-3 rounded font-semibold hover:bg-opacity-90 transition"
-          >
+          <Link href="/contacto" className={buttonStyles({ size: 'lg', className: 'mt-9' })}>
             Ponte en Contacto
-          </a>
+          </Link>
         </div>
       </section>
     </>

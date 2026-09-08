@@ -1,63 +1,55 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { buttonStyles } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
   title: 'Página no encontrada | MRGLVM',
   description: 'La página que buscas no existe o ha sido movida.',
 };
 
-export default function NotFound() {
-  const sugerencias = [
-    { href: '/', label: '🏠 Inicio' },
-    { href: '/nosotros', label: '👥 Nosotros' },
-    { href: '/revista', label: '📚 Revista' },
-    { href: '/ingresa', label: '✍️ Solicitar Ingreso' },
-    { href: '/contacto', label: '📧 Contacto' },
-  ];
+const SUGERENCIAS = [
+  { href: '/', label: 'Inicio' },
+  { href: '/nosotros', label: 'Nosotros' },
+  { href: '/revista', label: 'Revista' },
+  { href: '/ingresa', label: 'Solicitar Ingreso' },
+  { href: '/contacto', label: 'Contacto' },
+];
 
+export default function NotFound() {
   return (
-    <div className="min-h-screen bg-institucional-fondo flex items-center justify-center px-4">
-      <div className="text-center max-w-md">
-        <h1 className="font-serif text-8xl font-bold text-institucional-primario mb-4">404</h1>
-        <h2 className="font-serif text-3xl font-bold text-institucional-primario mb-4">
-          Página no encontrada
-        </h2>
-        <p className="text-gray-700 mb-8">
+    <div className="flex min-h-[70vh] items-center justify-center bg-surface-page px-4 py-20">
+      <div className="w-full max-w-lg">
+        <p className="text-eyebrow uppercase text-gold-700">Error 404</p>
+        <h1 className="mt-4 font-serif">Página no encontrada</h1>
+        <div className="mt-6 h-px w-16 bg-gold-700" />
+        <p className="mt-6 leading-relaxed text-content-secondary">
           La página que buscas no existe o ha sido movida a una nueva dirección.
           Te invitamos a explorar nuestro sitio o regresar al inicio.
         </p>
 
-        {/* CTA Principal */}
-        <Link
-          href="/"
-          className="inline-block bg-institucional-primario text-white px-8 py-3 rounded font-semibold hover:bg-opacity-90 transition mb-8"
-        >
+        <Link href="/" className={buttonStyles({ className: 'mt-8' })}>
           Volver a Inicio
         </Link>
 
-        {/* Sugerencias de navegación */}
-        <div className="border-t border-institucional-borde pt-8">
-          <p className="text-sm text-gray-600 mb-4">O explora estas páginas populares:</p>
-          <div className="grid grid-cols-2 gap-2">
-            {sugerencias.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm text-institucional-primario hover:text-institucional-secundario font-semibold transition"
-              >
-                {item.label}
-              </Link>
+        <div className="mt-12 border-t border-line-subtle pt-8">
+          <p className="text-sm text-content-muted">O explora estas páginas populares:</p>
+          <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+            {SUGERENCIAS.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-sm font-medium text-navy-800 underline-offset-4 transition-colors duration-hover ease-out hover:text-gold-700 hover:underline"
+                >
+                  {item.label}
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
-        {/* Contacto */}
-        <div className="mt-8 pt-8 border-t border-institucional-borde">
-          <p className="text-xs text-gray-600">
-            ¿Crees que esto es un error?{' '}
-            <Link href="/contacto" className="text-institucional-primario font-semibold hover:underline">
-              Contacta con nosotros
-            </Link>
+        <div className="mt-8 border-t border-line-subtle pt-6">
+          <p className="text-sm text-content-muted">
+            ¿Crees que esto es un error? <Link href="/contacto" className="font-medium text-navy-800 underline underline-offset-4 transition-colors duration-hover ease-out hover:text-gold-700">Contacta con nosotros</Link>
           </p>
         </div>
       </div>

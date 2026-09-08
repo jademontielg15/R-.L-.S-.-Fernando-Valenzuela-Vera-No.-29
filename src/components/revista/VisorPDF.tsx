@@ -14,6 +14,19 @@ interface VisorPDFProps {
   titulo: string;
 }
 
+/**
+ * Un spinner rápido hace que la carga se perciba más corta aunque el tiempo real
+ * sea idéntico. `data-keep-motion` lo exceptúa del corte global de movimiento:
+ * es feedback funcional, no decoración.
+ */
+const Spinner = () => (
+  <span
+    data-keep-motion
+    aria-hidden="true"
+    className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-line border-t-navy-800 [animation-duration:600ms]"
+  />
+);
+
 export const VisorPDF: React.FC<VisorPDFProps> = ({ documentoId, titulo }) => {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [numPages, setNumPages] = useState<number>(0);
@@ -67,82 +80,81 @@ export const VisorPDF: React.FC<VisorPDFProps> = ({ documentoId, titulo }) => {
 
   if (loading) {
     return (
-      <div className="w-full h-96 flex items-center justify-center bg-gray-100 rounded">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-institucional-primario"></div>
-          <p className="mt-4 text-gray-700">Cargando documento...</p>
-        </div>
+      <div
+        role="status"
+        className="flex h-96 w-full flex-col items-center justify-center gap-4 rounded-md border border-line-subtle bg-surface-sunken"
+      >
+        <Spinner />
+        <p className="text-sm text-content-secondary">Cargando documento...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="w-full p-6 bg-red-50 border border-red-200 rounded">
-        <p className="text-red-700 font-semibold">Error al cargar el documento</p>
-        <p className="text-red-600 text-sm mt-2">{error}</p>
+      <div role="alert" className="w-full rounded-md border border-danger/30 bg-danger-soft p-6">
+        <p className="font-medium text-danger">Error al cargar el documento</p>
+        <p className="mt-2 text-sm text-danger/80">{error}</p>
       </div>
     );
   }
 
   if (!pdfUrl) {
     return (
-      <div className="w-full p-6 bg-gray-50 border border-gray-200 rounded">
-        <p className="text-gray-700">No hay URL disponible para este documento</p>
+      <div className="w-full rounded-md border border-dashed border-line p-6">
+        <p className="text-content-secondary">No hay URL disponible para este documento</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Título */}
-      <h2 className="font-serif text-3xl font-bold text-institucional-primario">{titulo}</h2>
+    <div className="space-y-5">
+      <h2 className="font-serif text-2xl text-navy-800">{titulo}</h2>
 
-      {/* Visor PDF */}
-      <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg border border-gray-300">
-        <div className="flex justify-center p-4 bg-gray-200">
+      {/* Lienzo del documento. Los grises neutros anteriores (gray-100/200/300)
+          chocaban con el crema del sitio; ahora es el mismo neutro cálido. */}
+      <div className="overflow-hidden rounded-md border border-line-subtle bg-surface-sunken">
+        <div className="flex justify-center p-4 sm:p-6">
           <Document
             file={pdfUrl}
             onLoadSuccess={handleDocumentLoadSuccess}
-            loading={<p className="text-gray-700">Preparando documento...</p>}
-            error={<p className="text-red-600">Error al cargar PDF</p>}
+            loading={<p className="py-12 text-sm text-content-secondary">Preparando documento...</p>}
+            error={<p className="py-12 text-sm text-danger">Error al cargar PDF</p>}
           >
-            <Page pageNumber={currentPage} width={600} />
+            <Page
+              pageNumber={currentPage}
+              width={600}
+              className="shadow-lg [&_canvas]:!h-auto [&_canvas]:!max-w-full"
+            />
           </Document>
         </div>
       </div>
 
       {/* Controles de Navegación */}
-      <div className="bg-white p-6 rounded-lg border border-institucional-borde">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          {/* Botones anterior/siguiente */}
+      <div className="rounded-md border border-line-subtle bg-surface-raised p-5">
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={goToPreviousPage}
-              disabled={currentPage === 1}
-            >
-              ← Anterior
+            <Button variant="outline" size="sm" onClick={goToPreviousPage} disabled={currentPage === 1}>
+              <span aria-hidden="true">&larr;</span>
+              Anterior
             </Button>
             <Button
               variant="outline"
+              size="sm"
               onClick={goToNextPage}
               disabled={currentPage === numPages}
             >
-              Siguiente →
+              Siguiente
+              <span aria-hidden="true">&rarr;</span>
             </Button>
           </div>
 
-          {/* Indicador de página */}
-          <div className="text-center">
-            <p className="font-semibold text-institucional-primario">
-              Página {currentPage} de {numPages}
-            </p>
-          </div>
+          <p aria-live="polite" className="text-sm tabular-nums text-content-secondary">
+            Página <span className="font-medium text-navy-800">{currentPage}</span> de {numPages}
+          </p>
 
-          {/* Input para ir a página específica */}
-          <div className="flex gap-2 items-center">
-            <label htmlFor="page-input" className="text-sm font-semibold text-gray-700">
+          <div className="flex items-center gap-2">
+            <label htmlFor="page-input" className="text-sm text-content-secondary">
               Ir a página:
             </label>
             <input
@@ -152,18 +164,15 @@ export const VisorPDF: React.FC<VisorPDFProps> = ({ documentoId, titulo }) => {
               max={numPages}
               value={currentPage}
               onChange={(e) => goToPage(parseInt(e.target.value) || 1)}
-              className="w-16 px-2 py-1 border-2 border-institucional-borde rounded text-center"
+              className="w-16 rounded border border-line bg-surface-raised px-2 py-1.5 text-center text-sm tabular-nums transition-[border-color,box-shadow] duration-hover ease-out focus:border-navy-800 focus:shadow-[inset_0_0_0_1px_rgb(var(--navy-800))] focus:outline-none"
             />
           </div>
         </div>
 
-        {/* Nota sobre solo lectura */}
-        <div className="mt-4 p-3 bg-institucional-fondo rounded text-sm text-gray-700 border border-institucional-borde">
-          <p>
-            <strong>ℹ️ Modo solo lectura:</strong> Este documento no puede ser descargado directamente. Si necesitas
-            una copia, contacta a la administración.
-          </p>
-        </div>
+        <p className="mt-5 border-t border-line-subtle pt-4 text-sm leading-relaxed text-content-muted">
+          <strong className="font-medium text-navy-800">Modo solo lectura:</strong> este documento no
+          puede ser descargado directamente. Si necesitas una copia, contacta a la administración.
+        </p>
       </div>
     </div>
   );

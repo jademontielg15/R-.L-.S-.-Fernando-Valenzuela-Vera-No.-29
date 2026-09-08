@@ -42,51 +42,58 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-institucional-primario flex items-center justify-center px-4">
-      <Card variant="elevated" className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="font-serif text-4xl font-bold text-institucional-primario mb-2">MRGLVM</h1>
-          <h2 className="text-2xl font-bold text-institucional-primario">Panel de Administración</h2>
-          <p className="text-gray-600 text-sm mt-2">Acceso restringido a administradores</p>
-        </div>
+    <div className="flex min-h-[70vh] items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md">
+        <Card variant="elevated" className="p-8">
+          <div className="border-b border-line-subtle pb-6">
+            <p className="text-eyebrow uppercase text-gold-700">Panel de Administración</p>
+            <h1 className="mt-3 font-serif text-2xl text-navy-800">MRGLVM</h1>
+            <p className="mt-2 text-sm text-content-muted">Acceso restringido a administradores</p>
+          </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          <Input
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="admin@mrglvm.mx"
-            required
-            disabled={loading}
-          />
+          <form onSubmit={handleLogin} className="mt-7 space-y-5">
+            <Input
+              label="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="admin@mrglvm.mx"
+              autoComplete="email"
+              required
+              disabled={loading}
+            />
 
-          <Input
-            label="Contraseña"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            required
-            disabled={loading}
-          />
+            <Input
+              label="Contraseña"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              autoComplete="current-password"
+              required
+              disabled={loading}
+            />
 
-          {error && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
-              {error}
-            </div>
-          )}
+            {error && (
+              <div
+                role="alert"
+                className="rounded border border-danger/30 bg-danger-soft p-3.5 text-sm text-danger"
+              >
+                {error}
+              </div>
+            )}
 
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-          </Button>
-        </form>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            </Button>
+          </form>
 
-        <div className="mt-8 p-4 bg-institucional-fondo rounded text-sm text-gray-700 border border-institucional-borde">
-          <p className="font-semibold mb-2">📝 Nota:</p>
-          <p>Para acceder, necesitas credenciales de administrador. Contacta al responsable del sitio si olvidaste tu contraseña.</p>
-        </div>
-      </Card>
+          <p className="mt-7 border-t border-line-subtle pt-5 text-sm leading-relaxed text-content-muted">
+            Para acceder, necesitas credenciales de administrador. Contacta al responsable del sitio
+            si olvidaste tu contraseña.
+          </p>
+        </Card>
+      </div>
     </div>
   );
 }

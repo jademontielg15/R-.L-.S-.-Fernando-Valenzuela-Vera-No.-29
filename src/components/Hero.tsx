@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
+import { buttonStyles } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 
 interface HeroProps {
   title: string;
@@ -15,29 +17,60 @@ export const Hero: React.FC<HeroProps> = ({
   ctaText,
   ctaHref = '/',
   backgroundDark = true,
-}) => {
-  const bgClass = backgroundDark ? 'bg-institucional-primario text-white' : 'bg-institucional-fondo';
-  const textClass = backgroundDark ? 'text-gray-200' : 'text-institucional-texto';
-
-  return (
-    <section className={`${bgClass} py-20`}>
-      <div className="container mx-auto px-4 text-center">
-        <h1 className={`font-serif text-5xl font-bold mb-6 ${backgroundDark ? '' : 'text-institucional-primario'}`}>
+}) => (
+  <section
+    className={cn(
+      'border-b',
+      backgroundDark
+        ? 'on-inverse border-navy-700/60 bg-navy-900 text-content-inverse'
+        : 'border-line-subtle bg-surface-page'
+    )}
+  >
+    <div className="container mx-auto px-4 py-20 md:py-28">
+      <div className="max-w-3xl">
+        <h1
+          className={cn(
+            'text-display font-serif',
+            backgroundDark ? 'text-content-inverse' : 'text-navy-800'
+          )}
+        >
           {title}
         </h1>
+
+        {/* Regla dorada: el acento como puntuación editorial, no como relleno. */}
+        <div
+          className={cn(
+            'mt-7 h-px w-16',
+            backgroundDark ? 'bg-gold-400' : 'bg-gold-700'
+          )}
+        />
+
         {subtitle && (
-          <p className={`text-xl mb-8 max-w-2xl mx-auto ${textClass}`}>
+          <p
+            className={cn(
+              'measure mt-7 text-lg leading-relaxed md:text-xl',
+              backgroundDark ? 'text-navy-200' : 'text-content-secondary'
+            )}
+          >
             {subtitle}
           </p>
         )}
+
         {ctaText && (
-          <a href={ctaHref}>
-            <Button variant={backgroundDark ? 'secondary' : 'default'} size="lg">
-              {ctaText}
-            </Button>
-          </a>
+          // Antes: <a><Button/></a>. Un <button> dentro de un <a> es HTML
+          // inválido y rompe la navegación por teclado.
+          <Link
+            href={ctaHref}
+            className={buttonStyles({
+              variant: backgroundDark ? 'secondary' : 'default',
+              size: 'lg',
+              className: 'mt-10',
+            })}
+          >
+            {ctaText}
+          </Link>
         )}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);

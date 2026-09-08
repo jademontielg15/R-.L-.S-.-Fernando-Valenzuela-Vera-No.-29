@@ -34,23 +34,25 @@ export async function ListaDocumentosPDF({ categoria }: ListaDocumentosPDFProps)
   if (error) {
     console.error('Error fetching documentos:', error);
     return (
-      <div className="p-6 bg-red-50 border border-red-200 rounded">
-        <p className="text-red-700 font-semibold">Error al cargar documentos</p>
-        <p className="text-red-600 text-sm mt-2">{error.message}</p>
+      <div role="alert" className="rounded-md border border-danger/30 bg-danger-soft p-6">
+        <p className="font-medium text-danger">Error al cargar documentos</p>
+        <p className="mt-2 text-sm text-danger/80">{error.message}</p>
       </div>
     );
   }
 
   if (!documentos || documentos.length === 0) {
     return (
-      <div className="p-6 bg-institucional-fondo border border-institucional-borde rounded text-center">
-        <p className="text-gray-700 font-semibold">No hay documentos disponibles en esta categoría</p>
+      <div className="rounded-md border border-dashed border-line p-10 text-center">
+        <p className="text-content-secondary">
+          No hay documentos disponibles en esta categoría
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
       {documentos.map((doc: any) => (
         <TarjetaDocumento
           key={doc.id}

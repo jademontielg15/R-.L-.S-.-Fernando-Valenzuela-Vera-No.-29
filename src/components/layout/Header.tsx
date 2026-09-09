@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -30,8 +31,16 @@ export function Header() {
       <div className="container mx-auto flex h-[4.5rem] items-center justify-between gap-6 px-4">
         <Link
           href="/"
-          className="font-serif text-[1.375rem] font-semibold tracking-[-0.02em] transition-colors duration-hover ease-out hover:text-gold-300"
+          className="flex items-center gap-3 font-serif text-[1.375rem] font-semibold tracking-[-0.02em] transition-colors duration-hover ease-out hover:text-gold-300"
         >
+          <Image
+            src="/images/logo.png"
+            alt="Muy Respetable Gran Logia Valle de México"
+            width={40}
+            height={40}
+            priority
+            className="h-10 w-10 shrink-0"
+          />
           {ORG_SHORTNAME}
         </Link>
 

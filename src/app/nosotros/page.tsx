@@ -56,12 +56,58 @@ export default function NosotrosPage() {
       />
 
       <GaleriaImagenes
-        titulo="Nuestras Instalaciones"
+        titulo="Memoria visual"
         imagenes={[
-          { url: 'https://picsum.photos/seed/templo-1/400/400', alt: 'Templo masónico' },
-          { url: 'https://picsum.photos/seed/templo-2/400/400', alt: 'Cámara de rituales' },
-          { url: 'https://picsum.photos/seed/templo-3/400/400', alt: 'Salón de banquetes' },
-          { url: 'https://picsum.photos/seed/templo-4/400/400', alt: 'Biblioteca' },
+          {
+            url: '/images/galeria/imagen-01.jpeg',
+            alt: 'Ceremonia masónica en el interior de la logia',
+            titulo: 'Vida de logia',
+          },
+          {
+            url: '/images/galeria/imagen-02.jpeg',
+            alt: 'Miembros participando en una ceremonia de la logia',
+            titulo: 'Trabajo institucional',
+          },
+          {
+            url: '/images/galeria/imagen-03.jpeg',
+            alt: 'Actividad ceremonial dentro de la logia',
+            titulo: 'Tradición y presencia',
+          },
+          {
+            url: '/images/galeria/imagen-04.jpeg',
+            alt: 'Miembro de la logia durante una participación ceremonial',
+            titulo: 'Participación masónica',
+          },
+          {
+            url: '/images/galeria/imagen-05.jpeg',
+            alt: 'Grupo de miembros reunidos en la logia',
+            titulo: 'Fraternidad',
+          },
+          {
+            url: '/images/galeria/imagen-06.jpeg',
+            alt: 'Grupo de masones reunidos para una fotografía institucional',
+            titulo: 'Comunidad masónica',
+          },
+          {
+            url: '/images/galeria/imagen-07.jpeg',
+            alt: 'Actividad comunitaria con participación de la logia',
+            titulo: 'Servicio a la comunidad',
+          },
+          {
+            url: '/images/galeria/imagen-08.jpeg',
+            alt: 'Miembros de la logia durante una actividad pública',
+            titulo: 'Presencia institucional',
+          },
+          {
+            url: '/images/galeria/imagen-09.jpeg',
+            alt: 'Convivencia entre miembros de la logia',
+            titulo: 'Convivencia',
+          },
+          {
+            url: '/images/galeria/imagen-10.jpeg',
+            alt: 'Grupo de miembros reunidos en una sesión de la logia',
+            titulo: 'Historia compartida',
+          },
         ]}
         columnas={4}
       />

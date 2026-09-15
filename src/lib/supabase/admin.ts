@@ -1,6 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-import type { Database } from '@/types/database.types';
-
 /**
  * Creates an admin Supabase client using the service_role key.
  * This should ONLY be used in server-side route handlers, NEVER exposed to the browser.
@@ -13,7 +11,7 @@ export const createAdminClient = () => {
     throw new Error('Missing Supabase environment variables');
   }
 
-  return createClient<Database>(supabaseUrl, serviceRoleKey, {
+  return createClient(supabaseUrl, serviceRoleKey, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,

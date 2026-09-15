@@ -67,7 +67,12 @@ export default async function DocumentoPage({ params }: PageProps) {
   }
 
   const metadatos = [
-    { etiqueta: 'Categoría', valor: documento.categorias?.nombre || 'Sin categoría' },
+    {
+      etiqueta: 'Categoría',
+      valor: (Array.isArray(documento.categorias)
+        ? documento.categorias[0]?.nombre
+        : undefined) || 'Sin categoría',
+    },
     {
       etiqueta: 'Fecha de publicación',
       valor: new Date(documento.fecha_publicacion).toLocaleDateString('es-MX', {

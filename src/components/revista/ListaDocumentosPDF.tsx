@@ -6,7 +6,35 @@ interface ListaDocumentosPDFProps {
 }
 
 export async function ListaDocumentosPDF({ categoria }: ListaDocumentosPDFProps) {
-  const supabase = await createClient();
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return (
+      <div className="rounded-md border border-dashed border-line bg-surface-sunken p-10 text-center">
+        <p className="font-medium text-navy-800">La hemeroteca estará disponible próximamente</p>
+        <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-content-secondary">
+          Estamos preparando las publicaciones institucionales. Mientras tanto, puedes contactarnos
+          para solicitar información sobre una edición específica.
+        </p>
+      </div>
+    );
+  }
+
+  let supabase;
+  try {
+    supabase = await createClient();
+  } catch (error) {
+    console.error('Error inicializando la hemeroteca:', error);
+    return (
+      <div role="alert" className="rounded-md border border-danger/30 bg-danger-soft p-6">
+        <p className="font-medium text-danger">La hemeroteca no está disponible</p>
+        <p className="mt-2 text-sm text-danger/80">
+          Intenta nuevamente más tarde o contacta con la administración.
+        </p>
+      </div>
+    );
+  }
 
   // Obtener documentos visibles de la BD
   let query = supabase
@@ -35,8 +63,10 @@ export async function ListaDocumentosPDF({ categoria }: ListaDocumentosPDFProps)
     console.error('Error fetching documentos:', error);
     return (
       <div role="alert" className="rounded-md border border-danger/30 bg-danger-soft p-6">
-        <p className="font-medium text-danger">Error al cargar documentos</p>
-        <p className="mt-2 text-sm text-danger/80">{error.message}</p>
+        <p className="font-medium text-danger">La hemeroteca no está disponible</p>
+        <p className="mt-2 text-sm text-danger/80">
+          Intenta nuevamente más tarde o contacta con la administración.
+        </p>
       </div>
     );
   }

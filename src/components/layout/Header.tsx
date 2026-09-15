@@ -31,6 +31,7 @@ export function Header() {
       <div className="container mx-auto flex h-[4.5rem] items-center justify-between gap-6 px-4">
         <Link
           href="/"
+<<<<<<< HEAD
           className="flex items-center gap-3 font-serif text-[1.375rem] font-semibold tracking-[-0.02em] transition-colors duration-hover ease-out hover:text-gold-300"
         >
           <Image
@@ -42,6 +43,18 @@ export function Header() {
             className="h-10 w-10 shrink-0"
           />
           {ORG_SHORTNAME}
+=======
+          className="flex items-center gap-3 transition-colors duration-hover ease-out hover:text-gold-300"
+        >
+          <img
+            src="/images/logo.png"
+            alt="Logo MRGLVM"
+            className="h-10 w-auto bg-transparent"
+          />
+          <span className="font-serif text-[1.375rem] font-semibold tracking-[-0.02em]">
+            {ORG_SHORTNAME}
+          </span>
+>>>>>>> 7f9c56c (Refactor code structure for improved readability and maintainability)
         </Link>
 
         {/* Navegación de escritorio */}

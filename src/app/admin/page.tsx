@@ -46,7 +46,14 @@ export default function AdminDashboard() {
 
         if (fetchError) throw fetchError;
 
-        setDocumentos(data || []);
+        setDocumentos(
+          (data || []).map((documento) => ({
+            ...documento,
+            categorias: Array.isArray(documento.categorias)
+              ? documento.categorias[0]
+              : documento.categorias,
+          }))
+        );
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error al cargar documentos');

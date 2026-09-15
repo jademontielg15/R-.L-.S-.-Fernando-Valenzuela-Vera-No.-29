@@ -11,51 +11,49 @@
 
 @layer base {
   :root {
-    /* ---------- Azul institucional ---------- */
-    /* 800 es el azul de marca original (#1C2B4A), intacto. */
-    --navy-50: 240 243 248;
-    --navy-100: 225 230 239;
-    --navy-200: 195 204 220;
-    --navy-300: 151 166 192;
-    --navy-400: 107 126 163;
-    --navy-500: 70 92 133;
-    --navy-600: 52 73 111;
-    --navy-700: 39 57 92;
-    --navy-800: 28 43 74;
-    --navy-900: 19 31 56;
-    --navy-950: 13 21 38;
+     /* ---------- Petróleo institucional ---------- */
+     /* Más profundo y menos genérico que el azul marino original. */
+     --navy-50: 239 245 244;
+     --navy-100: 220 231 229;
+     --navy-200: 184 202 199;
+     --navy-300: 139 164 160;
+     --navy-400: 92 124 119;
+     --navy-500: 61 94 91;
+     --navy-600: 43 73 72;
+     --navy-700: 31 57 60;
+     --navy-800: 22 43 50;
+     --navy-900: 14 30 37;
+     --navy-950: 8 19 25;
 
-    /* ---------- Dorado institucional ---------- */
-    /* 700 es el dorado de marca original (#8C6A2F): 4.57:1 sobre crema, pasa AA.
-       400 (#D4B276) es su contraparte para fondo oscuro: 6.98:1 sobre navy-800.
-       El original daba 2.82:1 sobre navy y fallaba AA. */
-    --gold-50: 251 247 238;
-    --gold-100: 246 237 218;
-    --gold-200: 238 220 187;
-    --gold-300: 226 199 149;
-    --gold-400: 212 178 118;
-    --gold-500: 192 154 85;
-    --gold-600: 168 131 66;
-    --gold-700: 140 106 47;
-    --gold-800: 107 78 34;
-    --gold-900: 74 55 21;
+     /* ---------- Latón envejecido ---------- */
+     /* Dorado menos brillante, con más presencia editorial y mejor contraste. */
+     --gold-50: 253 249 239;
+     --gold-100: 247 235 202;
+     --gold-200: 237 211 157;
+     --gold-300: 220 177 98;
+     --gold-400: 201 157 72;
+     --gold-500: 174 126 45;
+     --gold-600: 145 99 30;
+     --gold-700: 119 78 26;
+     --gold-800: 88 54 20;
+     --gold-900: 57 35 15;
 
-    /* ---------- Neutros cálidos ---------- */
-    --sand-50: 253 252 250;
-    --sand-100: 247 245 240;
-    --sand-200: 239 235 226;
-    --sand-300: 231 226 214;
-    --sand-400: 217 210 194;
-    --sand-500: 176 168 150;
-    --sand-600: 122 116 103;
-    --sand-700: 74 74 74;
-    --sand-800: 45 45 45;
-    --sand-900: 26 26 26;
+     /* ---------- Marfil y piedra ---------- */
+     --sand-50: 255 254 251;
+     --sand-100: 247 244 236;
+     --sand-200: 237 231 218;
+     --sand-300: 225 216 198;
+     --sand-400: 207 194 169;
+     --sand-500: 165 151 127;
+     --sand-600: 113 103 87;
+     --sand-700: 70 65 57;
+     --sand-800: 42 39 34;
+     --sand-900: 24 23 20;
 
     /* ---------- Estados ---------- */
-    --danger: 158 44 44;
-    --danger-soft: 253 242 242;
-    --success: 33 105 74;
+    --danger: 126 43 47;
+    --danger-soft: 250 238 237;
+    --success: 36 103 83;
 
     /* ---------- Tokens semánticos ---------- */
     --surface-page: var(--sand-100);

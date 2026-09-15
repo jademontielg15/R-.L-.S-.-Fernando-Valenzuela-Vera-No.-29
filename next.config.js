@@ -6,6 +6,7 @@ const nextConfig = {
   // /nosotros y /knights-builders lanzaban 500 al renderizar.
   images: {
     remotePatterns: [{ protocol: "https", hostname: "picsum.photos" }],
+    qualities: [75, 100],
   },
   redirects: async () => {
     return [
@@ -25,12 +26,27 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/masonería',
+        destination: '/masoneria',
+        permanent: true,
+      },
+      {
         source: '/revistas-institucionales',
         destination: '/revista',
         permanent: true,
       },
       {
         source: '/knightsbuildersgrandchapter',
+        destination: '/knights-builders',
+        permanent: true,
+      },
+      {
+        source: '/kings',
+        destination: '/knights-builders',
+        permanent: true,
+      },
+      {
+        source: '/knights',
         destination: '/knights-builders',
         permanent: true,
       },

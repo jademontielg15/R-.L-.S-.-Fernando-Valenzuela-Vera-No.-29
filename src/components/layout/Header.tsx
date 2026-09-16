@@ -45,7 +45,7 @@ export function Header() {
         </Link>
 
         {/* Navegación de escritorio */}
-        <nav aria-label="Principal" className="hidden lg:flex lg:items-center lg:gap-1">
+        <nav aria-label="Principal" className="hidden lg:flex lg:items-center lg:gap-1.5">
           {NAV.map((item) => {
             const active = isActive(item.href);
             return (
@@ -54,15 +54,17 @@ export function Header() {
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'relative rounded px-3 py-2 text-[0.9375rem] transition-colors duration-hover ease-out',
+                  'relative rounded border border-transparent px-3 py-2 text-[0.9375rem] font-medium transition-[background-color,border-color,color] duration-hover ease-out',
                   // navy-200 sobre navy-900 da 10.1:1. El dorado de marca sobre
                   // el azul solo daba 2.82:1 y fallaba AA como estado hover.
-                  active ? 'text-content-inverse' : 'text-navy-200 hover:text-content-inverse',
+                  active
+                    ? 'border-gold-400/50 bg-navy-800/70 text-gold-200'
+                    : 'text-navy-200 hover:border-navy-700 hover:bg-navy-800/60 hover:text-gold-200',
                   // La regla dorada marca la sección activa: acento como señal,
                   // no como decoración.
                   'after:absolute after:inset-x-3 after:-bottom-px after:h-px after:bg-gold-400',
                   'after:origin-left after:transition-transform after:duration-enter after:ease-out',
-                  active ? 'after:scale-x-100' : 'after:scale-x-0'
+                  active ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'
                 )}
               >
                 {item.label}
@@ -77,7 +79,8 @@ export function Header() {
             className={buttonStyles({
               variant: 'secondary',
               size: 'sm',
-              className: 'hidden sm:inline-flex',
+              className:
+                'hidden border border-gold-400/60 shadow-xs hover:border-gold-300 hover:shadow-sm sm:inline-flex',
             })}
           >
             Ingresa
@@ -136,10 +139,10 @@ export function Header() {
                     href={item.href}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'flex items-center gap-3 border-l-2 py-3 pl-4 text-base transition-colors duration-hover ease-out',
+                      'flex items-center gap-3 border-l-2 py-3 pl-4 text-base font-medium transition-[background-color,border-color,color] duration-hover ease-out',
                       active
-                        ? 'border-gold-400 text-content-inverse'
-                        : 'border-transparent text-navy-200 hover:text-content-inverse'
+                        ? 'border-l-gold-400 bg-navy-800/70 text-gold-200'
+                        : 'border-l-transparent text-navy-200 hover:border-l-gold-300 hover:bg-navy-800/60 hover:text-gold-200'
                     )}
                   >
                     {item.label}

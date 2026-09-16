@@ -84,7 +84,7 @@ export default function Home() {
 
             <div className="max-w-3xl">
               <p className="text-eyebrow uppercase tracking-[0.16em] text-gold-400">
-                Muy Respetable Gran Logia Valle de México
+                R:.L:.S:. Fernando Valenzuela Vera No. 29
               </p>
               <h1 className="text-display font-serif text-content-inverse">
                 Tradición, fraternidad y búsqueda de la verdad

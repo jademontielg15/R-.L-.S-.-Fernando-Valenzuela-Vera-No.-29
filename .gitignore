@@ -30,6 +30,7 @@ pnpm-debug.log*
 build/
 dist/
 .turbo/
+*.tsbuildinfo
 
 # Supabase CLI local metadata
 supabase/.temp/

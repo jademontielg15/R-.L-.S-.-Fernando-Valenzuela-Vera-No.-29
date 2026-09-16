@@ -61,52 +61,50 @@ export default function NosotrosPage() {
           {
             url: '/images/galeria/imagen-01.jpeg',
             alt: 'Ceremonia masónica en el interior de la logia',
-            titulo: 'Vida de logia',
-          },
-          {
-            url: '/images/galeria/imagen-02.jpeg',
-            alt: 'Miembros participando en una ceremonia de la logia',
-            titulo: 'Trabajo institucional',
-          },
-          {
-            url: '/images/galeria/imagen-03.jpeg',
-            alt: 'Actividad ceremonial dentro de la logia',
-            titulo: 'Tradición y presencia',
+            descripcion: 'Ceremonia institucional de la logia.',
+            categoria: 'fraternidad',
           },
           {
             url: '/images/galeria/imagen-04.jpeg',
             alt: 'Miembro de la logia durante una participación ceremonial',
-            titulo: 'Participación masónica',
+            descripcion: 'Participación de un miembro durante la ceremonia.',
+            categoria: 'fraternidad',
           },
           {
             url: '/images/galeria/imagen-05.jpeg',
             alt: 'Grupo de miembros reunidos en la logia',
-            titulo: 'Fraternidad',
+            descripcion: 'Encuentro de miembros de la comunidad.',
+            categoria: 'fraternidad',
           },
           {
             url: '/images/galeria/imagen-06.jpeg',
             alt: 'Grupo de masones reunidos para una fotografía institucional',
-            titulo: 'Comunidad masónica',
+            descripcion: 'Fotografía institucional de la fraternidad.',
+            categoria: 'fraternidad',
           },
           {
             url: '/images/galeria/imagen-07.jpeg',
             alt: 'Actividad comunitaria con participación de la logia',
-            titulo: 'Servicio a la comunidad',
+            descripcion: 'Actividad comunitaria con participación de la logia.',
+            categoria: 'eventos',
           },
           {
             url: '/images/galeria/imagen-08.jpeg',
             alt: 'Miembros de la logia durante una actividad pública',
-            titulo: 'Presencia institucional',
+            descripcion: 'Miembros durante una actividad pública.',
+            categoria: 'eventos',
           },
           {
             url: '/images/galeria/imagen-09.jpeg',
             alt: 'Convivencia entre miembros de la logia',
-            titulo: 'Convivencia',
+            descripcion: 'Convivencia entre miembros de la logia.',
+            categoria: 'convivencias',
           },
           {
             url: '/images/galeria/imagen-10.jpeg',
             alt: 'Grupo de miembros reunidos en una sesión de la logia',
-            titulo: 'Historia compartida',
+            descripcion: 'Reunión de miembros de la comunidad.',
+            categoria: 'fraternidad',
           },
         ]}
         columnas={4}

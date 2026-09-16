@@ -96,10 +96,10 @@ export default function KnightsPage() {
       <GaleriaImagenes
         titulo="Nuestras Actividades"
         imagenes={[
-          { url: 'https://picsum.photos/seed/knights-1/400/400', alt: 'Reunión de Knights' },
-          { url: 'https://picsum.photos/seed/knights-2/400/400', alt: 'Proyecto comunitario' },
-          { url: 'https://picsum.photos/seed/knights-3/400/400', alt: 'Ceremonia de iniciación' },
-          { url: 'https://picsum.photos/seed/knights-4/400/400', alt: 'Evento de networking' },
+          { url: 'https://picsum.photos/seed/knights-1/400/400', alt: 'Reunión de Knights', categoria: 'fraternidad' },
+          { url: 'https://picsum.photos/seed/knights-2/400/400', alt: 'Proyecto comunitario', categoria: 'eventos' },
+          { url: 'https://picsum.photos/seed/knights-3/400/400', alt: 'Ceremonia de iniciación', categoria: 'eventos' },
+          { url: 'https://picsum.photos/seed/knights-4/400/400', alt: 'Evento de networking', categoria: 'convivencias' },
         ]}
         columnas={4}
       />

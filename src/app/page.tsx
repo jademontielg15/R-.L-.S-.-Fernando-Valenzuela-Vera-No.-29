@@ -2,29 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { buttonStyles } from '@/components/ui/Button';
 
-const HITOS = [
-  {
-    year: 1934,
-    title: 'Fundación',
-    description: 'Establecimiento de la MRGLVM con los principios fundamentales de la masonería.',
-  },
-  {
-    year: 1947,
-    title: 'Consolidación',
-    description: 'Expansión y fortalecimiento de nuestras logias en el Valle de México.',
-  },
-  {
-    year: 1955,
-    title: 'Crecimiento institucional',
-    description: 'Fortalecimiento de nuestra presencia y compromiso con la sociedad.',
-  },
-  {
-    year: 'Hoy',
-    title: 'Tradición viva',
-    description: 'Continuamos formando, sirviendo y construyendo fraternidad.',
-  },
-] as const;
-
 const IDEALES = [
   { ideal: 'Fraternidad', description: 'Unidad y solidaridad entre nuestros miembros.' },
   { ideal: 'Tolerancia', description: 'Respeto por las diferentes perspectivas y creencias.' },
@@ -116,50 +93,39 @@ export default function Home() {
       {/* Rutas principales */}
       <section className="container mx-auto px-4 py-16 md:py-20">
         <div className="max-w-2xl">
-          <p className="text-eyebrow uppercase text-gold-700">Descubre MRGLVM</p>
           <h2 className="mt-3 font-serif">Un punto de entrada para conocer nuestra institución</h2>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-md border border-line-subtle bg-line-subtle sm:grid-cols-2 lg:grid-cols-4">
-          {ACCESOS.map((acceso) => (
-            <Link
-              key={acceso.numero}
-              href={acceso.href}
-              className="group flex min-h-56 flex-col bg-surface-raised p-6 transition-colors duration-hover ease-out hover:bg-sand-50"
-            >
-              <span className="font-serif text-2xl text-gold-700">{acceso.numero}</span>
-              <h3 className="mt-8 font-serif text-xl text-navy-800">{acceso.titulo}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-content-secondary">{acceso.descripcion}</p>
-              <span className="mt-auto pt-6 text-sm font-medium text-navy-800 underline-offset-4 group-hover:text-gold-700 group-hover:underline">
-                {acceso.accion} <span aria-hidden="true">→</span>
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
+        <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,1fr)_minmax(16rem,0.8fr)] md:gap-12">
+          <div className="max-w-sm grid grid-cols-1 gap-4 bg-transparent">
+            {ACCESOS.map((acceso) => (
+              <Link
+                key={acceso.numero}
+                href={acceso.href}
+                className="group flex min-h-64 flex-col rounded-md border border-gold-700/60 bg-surface-raised p-6 shadow-none transition-colors duration-hover ease-out hover:border-gold-600 hover:bg-sand-50"
+              >
+                <span className="font-serif text-2xl text-gold-700">{acceso.numero}</span>
+                <h3 className="mt-8 font-serif text-xl text-navy-800">{acceso.titulo}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-content-secondary">{acceso.descripcion}</p>
+                <span className="mt-auto pt-6 text-sm font-medium text-navy-800 underline-offset-4 group-hover:text-gold-700 group-hover:underline">
+                  {acceso.accion} <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            ))}
+          </div>
 
-      {/* Historia */}
-      <section className="container mx-auto px-4 py-20 md:py-24">
-        <h2 className="rule-accent font-serif">Nuestra Historia</h2>
-
-        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-md border border-line-subtle bg-line-subtle md:grid-cols-2 lg:grid-cols-4">
-          {/* El gap de 1px sobre fondo de borde produce separadores hairline
-              entre celdas: sustituye a las tres sombras sueltas anteriores, que
-              sobre el crema se leían como suciedad y no como elevación. */}
-          {HITOS.map((item) => (
-            <article
-              key={item.year}
-              className="group bg-surface-raised p-8 transition-colors duration-hover ease-out hover:bg-sand-50"
-            >
-              <p className="font-serif text-3xl font-semibold text-gold-700">{item.year}</p>
-              <h3 className="mt-3 font-serif text-xl text-navy-800">{item.title}</h3>
-              <p className="mt-3 text-content-secondary">{item.description}</p>
-            </article>
-          ))}
+          <div className="relative aspect-[4/5] w-full self-start overflow-hidden rounded-md border border-gold-700/60 bg-surface-raised md:self-center">
+            <Image
+              src="/images/monumento-tabasco.png"
+              alt="Monumento de Tabasco"
+              fill
+              priority
+              unoptimized
+              sizes="(min-width: 768px) 35vw, 100vw"
+              className="object-cover object-center"
+            />
+          </div>
         </div>
-        <Link href="/historia" className={buttonStyles({ variant: 'link', className: 'mt-8' })}>
-          Explorar la historia completa <span aria-hidden="true">→</span>
-        </Link>
       </section>
 
       {/* Presentación institucional */}

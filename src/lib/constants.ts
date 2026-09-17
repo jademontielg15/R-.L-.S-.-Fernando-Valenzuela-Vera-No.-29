@@ -13,15 +13,11 @@ export const ITEMS_PER_PAGE = 12;
 // Social media links (update with real URLs)
 export const SOCIAL_LINKS = {
   facebook: 'https://facebook.com/mrglvm',
-  instagram: 'https://instagram.com/mrglvm',
-  twitter: 'https://twitter.com/mrglvm',
-  youtube: 'https://youtube.com/@mrglvm',
   whatsapp: 'https://wa.me/5215551234567',
 };
 
 // Organization info
-export const ORG_NAME = 'Muy Respetable Gran Logia Valle de México';
+export const ORG_NAME = 'R:.L:.S:. Fernando Valenzuela Vera No. 29';
 export const ORG_SHORTNAME = 'R:.L:.S:. Fernando Valenzuela Vera No. 29';
-export const ORG_ADDRESS = 'Valle de México, Mexico';
+export const ORG_ADDRESS = 'Seccion 40, Cardenas Tabasco, Mexico';
 export const ORG_PHONE = '+52 (555) 123-4567';
-export const ORG_EMAIL = 'contacto@mrglvm.com.mx';

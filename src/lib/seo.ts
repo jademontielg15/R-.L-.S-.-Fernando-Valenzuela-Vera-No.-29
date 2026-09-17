@@ -23,7 +23,7 @@ export function generateMetadata(props: SEOProps): Metadata {
       url,
       title,
       description,
-      siteName: 'Muy Respetable Gran Logia Valle de México',
+      siteName: 'R:.L:.S:. Fernando Valenzuela Vera No. 29',
       images: [
         {
           url: ogImage,
@@ -48,18 +48,18 @@ export function generateMetadata(props: SEOProps): Metadata {
 export const DEFAULT_METADATA: Metadata = {
   metadataBase: new URL('https://mrglvm.com.mx'),
   title: {
-    default: 'Muy Respetable Gran Logia Valle de México',
-    template: '%s | MRGLVM',
+    default: 'Fernando Valenzuela Vera No. 29,
+    template: '%s | FVV29',
   },
   description:
-    'Muy Respetable Gran Logia Valle de México. Preservando la tradición masónica desde 1934.',
+    'R:.L:.S:. Fernando Valenzuela Vera No. 29. Preservando la tradición masónica desde 1934.',
   keywords: [
     'masonería',
     'logia',
-    'méxico',
-    'valle de méxico',
+    'masonería tabasco',
+    'cardenas',
     'gran logia',
-    'masonería mexico',
+    'masonería cardenas tabasco',
   ],
   robots: {
     index: true,

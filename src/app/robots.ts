@@ -17,6 +17,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/',
       },
     ],
-    sitemap: 'https://mrglvm.com.mx/sitemap.xml',
+    sitemap: 'https://fvv29.com.mx/sitemap.xml',
   };
 }

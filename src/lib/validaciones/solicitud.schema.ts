@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const solicitudIngresoSchema = z.object({
   nombre_completo: z
     .string()
-    .min(5, 'El nombre debe tener al menos 5 caracteres')
+    .min(5, 'El nombre debe tener al menos 3 caracteres')
     .max(100, 'El nombre no puede exceder 100 caracteres'),
 
   fecha_nacimiento: z

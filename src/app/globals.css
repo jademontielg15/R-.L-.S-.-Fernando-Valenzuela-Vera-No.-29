@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   MRGLVM — Capa de tokens
+   FVV29 — Capa de tokens
    Fuente única de verdad del sistema visual. Los colores se declaran como
    canales RGB sueltos para que Tailwind pueda aplicar modificadores de opacidad
    (bg-navy-800/60) sobre un token, algo imposible si se guardan como hex.

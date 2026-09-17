@@ -25,32 +25,32 @@ const serif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mrglvm.com.mx'),
+  metadataBase: new URL('https://fvv29.com.mx'),
   title: {
-    default: 'Muy Respetable Gran Logia Valle de México',
-    template: '%s | MRGLVM',
+    default: 'R:.L:.S:. Fernando Valenzuela Vera No. 29',
+    template: '%s | FVV29',
   },
-  description: 'Muy Respetable Gran Logia Valle de México. Preservando la tradición masónica desde 1934.',
-  keywords: ['masonería', 'logia', 'méxico', 'valle de méxico'],
+  description: 'R:.L:.S:. Fernando Valenzuela Vera No. 29. Preservando la tradición masónica desde 1934.',
+  keywords: ['masonería', 'logia', 'méxico', 'cardenas', 'fraternidad', 'tradición', 'educación', 'caridad'],
   openGraph: {
     type: 'website',
     locale: 'es_MX',
-    url: 'https://mrglvm.com.mx',
-    title: 'Muy Respetable Gran Logia Valle de México',
-    description: 'Preservando la tradición masónica desde 1934.',
+    url: 'https://fvv29.com.mx',
+    title: 'R:.L:.S:. Fernando Valenzuela Vera No. 29',
+    description: 'R:.L:.S:. Fernando Valenzuela Vera No. 29. Preservando la tradición masónica desde 1934.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'MRGLVM',
+        alt: 'FVV29 | Preservando la tradición masónica desde 1934',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Muy Respetable Gran Logia Valle de México',
-    description: 'Preservando la tradición masónica desde 1934.',
+    title: 'R:.L:.S:. Fernando Valenzuela Vera No. 29',
+    description: 'R:.L:.S:. Fernando Valenzuela Vera No. 29. Preservando la tradición masónica desde 1934.',
   },
 };
 

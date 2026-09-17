@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { buttonStyles } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
-  title: 'Página no encontrada | MRGLVM',
+  title: 'Página no encontrada | FVV29',
   description: 'La página que buscas no existe o ha sido movida.',
 };
 

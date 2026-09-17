@@ -48,7 +48,7 @@ export function generateMetadata(props: SEOProps): Metadata {
 export const DEFAULT_METADATA: Metadata = {
   metadataBase: new URL('https://mrglvm.com.mx'),
   title: {
-    default: 'Fernando Valenzuela Vera No. 29,
+    default: 'R:.L:.S:. Fernando Valenzuela Vera No. 29',
     template: '%s | FVV29',
   },
   description:

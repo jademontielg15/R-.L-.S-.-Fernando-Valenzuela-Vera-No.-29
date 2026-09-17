@@ -6,10 +6,10 @@ import { buttonStyles } from '@/components/ui/Button';
 import { FormularioSolicitud } from '@/components/FormularioSolicitud/FormularioSolicitud';
 
 export const metadata: Metadata = {
-  title: 'Solicitar Ingreso | MRGLVM',
-  description: 'Formulario para solicitar ingreso a la Muy Respetable Gran Logia Valle de México.',
+  title: 'Solicitar Ingreso | FVV29',
+  description: 'Formulario para solicitar ingreso a la R:.L:.S:. Fernando Valenzuela Vera No. 29.',
   openGraph: {
-    title: 'Solicitar Ingreso | MRGLVM',
+    title: 'Solicitar Ingreso | FVV29',
   },
 };
 
@@ -17,7 +17,7 @@ const REQUISITOS = [
   'Ser un hombre libre de buenas costumbres',
   'Ser mayor de 18 años',
   'Tener interés genuino en la masonería',
-  'Residir en el Valle de México',
+  'Residir en el Cárdenas, Tabasco o sus alrededores',
   'Estar dispuesto a cumplir con nuestros principios y rituales',
 ];
 

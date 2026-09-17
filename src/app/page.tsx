@@ -73,7 +73,7 @@ export default function Home() {
             <div className="relative h-48 w-48 shrink-0 rounded-full border border-transparent bg-transparent p-0 md:h-72 md:w-72 lg:h-80 lg:w-80">
               <Image
                 src="/images/logo.png"
-                alt="Logo MRGLVM"
+                alt="Logo de la R:.L:.S:. Fernando Valenzuela Vera No. 29"
                 fill
                 className="object-contain"
                 sizes="(max-width: 768px) 192px, (max-width: 1024px) 288px, 320px"
@@ -171,7 +171,7 @@ export default function Home() {
           </div>
           <div>
             <p className="text-lg leading-relaxed text-content-secondary">
-              La MRGLVM reúne a hombres comprometidos con el trabajo interior, el aprendizaje y la
+              La R:.L:.S:. Fernando Valenzuela Vera No. 29 reúne a hombres comprometidos con el trabajo interior, el aprendizaje y la
               construcción de una sociedad más justa. Nuestra institución ofrece un espacio de
               fraternidad, diálogo y crecimiento responsable.
             </p>

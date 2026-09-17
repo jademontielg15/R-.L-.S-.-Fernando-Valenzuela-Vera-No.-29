@@ -5,10 +5,10 @@ import { ListaDocumentosPDF } from '@/components/revista/ListaDocumentosPDF';
 import { buttonStyles } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
-  title: 'Revista Institucional | MRGLVM',
-  description: 'Hemeroteca de la Revista Institucional de la Muy Respetable Gran Logia Valle de México.',
+  title: 'Revista Institucional | FVV29',
+  description: 'Hemeroteca de la Revista Institucional de la R:.L:.S:. Fernando Valenzuela Vera No. 29.',
   openGraph: {
-    title: 'Revista Institucional | MRGLVM',
+    title: 'Revista Institucional | FVV29',
     description: 'Accede a nuestras publicaciones institucionales',
   },
 };

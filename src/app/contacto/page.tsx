@@ -7,10 +7,10 @@ import { Textarea } from '@/components/ui/Textarea';
 import { ORG_ADDRESS, ORG_PHONE, ORG_EMAIL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Contacto | MRGLVM',
-  description: 'Ponte en contacto con la Muy Respetable Gran Logia Valle de México.',
+  title: 'Contacto | FVV29',
+  description: 'Ponte en contacto con la R:.L:.S:. Fernando Valenzuela Vera No. 29.',
   openGraph: {
-    title: 'Contacto | MRGLVM',
+    title: 'Contacto | FVV29',
   },
 };
 

@@ -5,11 +5,11 @@ import { GaleriaImagenes } from '@/components/GaleriaImagenes';
 import { ANIO_FUNDACION } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Nosotros | MRGLVM',
-  description: 'Conoce la Muy Respetable Gran Logia Valle de México, su historia y gobierno.',
+  title: 'Nosotros | FVV29',
+  description: 'Conoce la R:.L:.S:. Fernando Valenzuela Vera No. 29, su historia y gobierno.',
   openGraph: {
-    title: 'Nosotros | MRGLVM',
-    description: 'Conoce la Muy Respetable Gran Logia Valle de México, su historia y gobierno.',
+    title: 'Nosotros | FVV29',
+    description: 'Conoce la R:.L:.S:. Fernando Valenzuela Vera No. 29, su historia y gobierno.',
   },
 };
 
@@ -20,13 +20,13 @@ export default function NosotrosPage() {
     <>
       <Hero
         title="Quiénes Somos"
-        subtitle={`La Muy Respetable Gran Logia Valle de México, con ${aniosHistoria} años de tradición masónica.`}
+        subtitle={`La R:.L:.S:. Fernando Valenzuela Vera No. 29, con ${aniosHistoria} años de tradición masónica.`}
       />
 
       <section className="container mx-auto px-4 py-20 md:py-24">
         <div className="measure space-y-6 text-lg leading-relaxed text-content-secondary">
           <p>
-            Desde nuestra fundación en {ANIO_FUNDACION}, la Muy Respetable Gran Logia Valle de México ha sido un bastión
+            Desde nuestra fundación en {ANIO_FUNDACION}, la R:.L:.S:. Fernando Valenzuela Vera No. 29 ha sido un bastión
             de los valores masónicos: fraternidad, tolerancia, verdad y progreso.
           </p>
           <p>

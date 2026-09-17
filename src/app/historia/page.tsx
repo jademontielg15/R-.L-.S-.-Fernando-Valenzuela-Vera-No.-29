@@ -4,10 +4,10 @@ import { LineaDeTiempo } from '@/components/LineaDeTiempo';
 import { ANIO_FUNDACION } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Historia de la Masonería | MRGLVM',
-  description: 'Línea de tiempo y historia de la masonería en México y en el Valle de México.',
+  title: 'Historia de la Masonería | FVV29',
+  description: 'Línea de tiempo y historia de la masonería en México y en la R:.L:.S:. Fernando Valenzuela Vera No. 29.',
   openGraph: {
-    title: 'Historia de la Masonería | MRGLVM',
+    title: 'Historia de la Masonería | FVV29  ',
   },
 };
 
@@ -15,8 +15,8 @@ export default function HistoriaPage() {
   const eventos = [
     {
       anio: ANIO_FUNDACION,
-      titulo: 'Fundación de la MRGLVM',
-      descripcion: 'Se establece la Muy Respetable Gran Logia del Valle de México con los principios fundamentales de la masonería universal.',
+      titulo: 'Fundación de la FVV29',
+      descripcion: 'Se establece la R:.L:.S:. Fernando Valenzuela Vera No. 29 con los principios fundamentales de la masonería universal.',
     },
     {
       anio: 1947,

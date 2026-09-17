@@ -3,10 +3,10 @@ import { Hero } from '@/components/Hero';
 import { Card } from '@/components/ui/Card';
 
 export const metadata: Metadata = {
-  title: 'Qué es la Masonería | MRGLVM',
+  title: 'Qué es la Masonería | FVV29',
   description: 'Descubre los principios, símbolos y valores de la masonería.',
   openGraph: {
-    title: 'Qué es la Masonería | MRGLVM',
+    title: 'Qué es la Masonería | FVV29',
   },
 };
 

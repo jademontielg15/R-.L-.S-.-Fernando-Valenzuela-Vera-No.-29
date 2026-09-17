@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
 
 export const metadata: Metadata = {
-  title: 'Aviso de Privacidad | MRGLVM',
-  description: 'Aviso de privacidad y protección de datos de la Muy Respetable Gran Logia Valle de México.',
+  title: 'Aviso de Privacidad | FVV29',
+  description: 'Aviso de privacidad y protección de datos de la R:.L:.S:. Fernando Valenzuela Vera No. 29.',
   openGraph: {
-    title: 'Aviso de Privacidad | MRGLVM',
+    title: 'Aviso de Privacidad | FVV29',
   },
 };
 
@@ -49,7 +49,7 @@ export default function PrivacidadPage() {
         <div className="measure space-y-10">
           <Seccion numero={1} titulo="Responsable del Tratamiento">
             <p>
-              La Muy Respetable Gran Logia Valle de México (MRGLVM) es responsable del tratamiento de tus datos
+              La R:.L:.S:. Fernando Valenzuela Vera No. 29 (FVV29) es responsable del tratamiento de tus datos
               personales conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares
               (LFPDPPP).
             </p>

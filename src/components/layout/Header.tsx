@@ -35,7 +35,7 @@ export function Header() {
         >
           <Image
             src="/images/logo.png"
-            alt="Muy Respetable Gran Logia Valle de México"
+            alt="R:.L:.S:. Fernando Valenzuela Vera No. 29"
             width={40}
             height={40}
             priority

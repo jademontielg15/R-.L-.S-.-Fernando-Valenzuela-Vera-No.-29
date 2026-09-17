@@ -21,3 +21,4 @@ export const ORG_NAME = 'R:.L:.S:. Fernando Valenzuela Vera No. 29';
 export const ORG_SHORTNAME = 'R:.L:.S:. Fernando Valenzuela Vera No. 29';
 export const ORG_ADDRESS = 'Seccion 40, Cardenas Tabasco, Mexico';
 export const ORG_PHONE = '+52 (555) 123-4567';
+export const ORG_EMAIL = 'contacto@fvv29.com.mx';

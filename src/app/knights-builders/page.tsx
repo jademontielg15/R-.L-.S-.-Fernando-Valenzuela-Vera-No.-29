@@ -7,10 +7,10 @@ import { Card } from '@/components/ui/Card';
 import { buttonStyles } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
-  title: 'Knights Builders Grand Chapter | MRGLVM',
+  title: 'Knights Builders Grand Chapter | FVV29',
   description: 'Capítulo juvenil de la masonería. Una organización dedicada a jóvenes masones.',
   openGraph: {
-    title: 'Knights Builders Grand Chapter | MRGLVM',
+    title: 'Knights Builders Grand Chapter | FVV29',
   },
 };
 

@@ -31,7 +31,7 @@ export async function generateMetadata(
   }
 
   return {
-    title: `${doc.titulo} | MRGLVM`,
+    title: `${doc.titulo} | FVV29`,
     description: doc.descripcion || 'Documento de la Revista Institucional',
     openGraph: {
       title: doc.titulo,

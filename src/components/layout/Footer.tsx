@@ -32,7 +32,7 @@ export function Footer() {
             {ORG_SHORTNAME}
           </h3>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-navy-200">
-            {ORG_NAME}. Preservando la tradición masónica desde 1934.
+            {ORG_NAME}. Preservando la tradición masónica.
           </p>
         </div>
 

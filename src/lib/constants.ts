@@ -1,5 +1,5 @@
 // Organization founding year (used for calculating "años de historia")
-export const ANIO_FUNDACION = 1934;
+export const ANIO_FUNDACION = 1980;
 
 // Storage bucket names
 export const STORAGE_BUCKET_PDFS = 'pdfs-institucionales';

@@ -13,7 +13,7 @@ const ACCESOS = [
   {
     numero: '01',
     titulo: 'Nuestra historia',
-    descripcion: 'Conoce el camino que hemos construido desde 1934.',
+    descripcion: 'Conoce el camino que hemos construido.',
     href: '/historia',
     accion: 'Explorar historia',
   },
@@ -69,7 +69,7 @@ export default function Home() {
               <div className="mx-auto mt-7 h-px w-16 bg-gold-400 md:mx-0" />
               <p className="measure mt-7 text-lg leading-relaxed text-navy-200 md:text-xl">
                 Una institución masónica dedicada al desarrollo moral, intelectual y social de sus
-                miembros, preservando una tradición viva desde 1934.
+                miembros, preservando una tradición viva.
               </p>
               <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row md:items-start">
                 <Link

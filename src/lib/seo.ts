@@ -52,7 +52,7 @@ export const DEFAULT_METADATA: Metadata = {
     template: '%s | FVV29',
   },
   description:
-    'R:.L:.S:. Fernando Valenzuela Vera No. 29. Preservando la tradición masónica desde 1934.',
+    'R:.L:.S:. Fernando Valenzuela Vera No. 29. Preservando la tradición masónica.',
   keywords: [
     'masonería',
     'logia',

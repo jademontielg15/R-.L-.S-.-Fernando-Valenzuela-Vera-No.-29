@@ -5,6 +5,7 @@ const ENLACES = [
   { href: '/nosotros', label: 'Nosotros' },
   { href: '/revista', label: 'Revista' },
   { href: '/ingresa', label: 'Solicitar Ingreso' },
+  { href: '/acceso', label: 'Acceso administradores' },
   { href: '/aviso-de-privacidad', label: 'Aviso de Privacidad' },
 ] as const;
 

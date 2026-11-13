@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient();
 
     // Insertar en BD (usa anon key, RLS permite insert público)
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('solicitudes_ingreso')
       .insert([
         {
@@ -67,11 +67,10 @@ export async function POST(request: NextRequest) {
           acepta_consentimiento_datos: datosValidados.acepta_consentimiento_datos,
           declara_hombre_libre: datosValidados.declara_hombre_libre,
         },
-      ])
-      .select();
+      ]);
 
     if (error) {
-      console.error('Error al insertar solicitud:', error);
+      console.error(error.code);
       return NextResponse.json(
         { error: 'Error al procesar tu solicitud. Por favor, intenta más tarde.' },
         { status: 500 }
@@ -82,7 +81,6 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         message: 'Solicitud recibida. Te contactaremos pronto.',
-        id: data?.[0]?.id,
       },
       { status: 201 }
     );

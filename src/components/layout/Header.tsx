@@ -75,6 +75,26 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <Link
+            href="/acceso"
+            className="hidden items-center gap-1.5 text-xs text-navy-300 transition-colors duration-hover ease-out hover:text-content-inverse lg:inline-flex"
+          >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="7" width="10" height="7" rx="1" />
+              <path d="M5 7V5a3 3 0 0 1 6 0v2" />
+            </svg>
+            Acceso
+          </Link>
+          <Link
             href="/ingresa"
             className={buttonStyles({
               variant: 'secondary',
@@ -150,6 +170,20 @@ export function Header() {
                 </li>
               );
             })}
+            <li>
+              <Link
+                href="/acceso"
+                aria-current={isActive('/acceso') ? 'page' : undefined}
+                className={cn(
+                  'flex items-center gap-3 border-l-2 py-3 pl-4 text-base font-medium transition-[background-color,border-color,color] duration-hover ease-out',
+                  isActive('/acceso')
+                    ? 'border-l-gold-400 bg-navy-800/70 text-gold-200'
+                    : 'border-l-transparent text-navy-200 hover:border-l-gold-300 hover:bg-navy-800/60 hover:text-gold-200'
+                )}
+              >
+                Acceso
+              </Link>
+            </li>
             <li className="py-3 sm:hidden">
               <Link
                 href="/ingresa"

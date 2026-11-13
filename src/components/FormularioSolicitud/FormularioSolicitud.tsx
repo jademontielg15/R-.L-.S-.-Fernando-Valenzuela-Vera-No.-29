@@ -88,8 +88,9 @@ export const FormularioSolicitud = () => {
 
       const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.error || 'Error al enviar la solicitud');
+      if (!response.ok || result?.success !== true) {
+        setSubmitError(result?.error || 'No fue posible confirmar el envío de tu solicitud.');
+        return;
       }
 
       setSubmitSuccess(true);
@@ -99,8 +100,8 @@ export const FormularioSolicitud = () => {
       setTimeout(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 100);
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : 'Error desconocido');
+    } catch {
+      setSubmitError('No fue posible confirmar el envío de tu solicitud.');
     } finally {
       setIsSubmitting(false);
     }

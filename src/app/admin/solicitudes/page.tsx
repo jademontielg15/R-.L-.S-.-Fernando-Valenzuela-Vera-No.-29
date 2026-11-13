@@ -35,12 +35,14 @@ export default function SolicitudesPage() {
   const supabase = createClient();
   const [solicitudes, setSolicitudes] = useState<Solicitud[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [filtro, setFiltro] = useState<Filtro>('todas');
 
   useEffect(() => {
     const fetchSolicitudes = async () => {
       try {
         setLoading(true);
+        setLoadError(null);
         let query = supabase
           .from('solicitudes_ingreso')
           .select('*')
@@ -59,6 +61,7 @@ export default function SolicitudesPage() {
         setSolicitudes(data || []);
       } catch (error) {
         console.error('Error fetching solicitudes:', error);
+        setLoadError('No fue posible cargar las solicitudes.');
       } finally {
         setLoading(false);
       }
@@ -155,9 +158,13 @@ export default function SolicitudesPage() {
           <p className="py-16 text-center text-sm text-content-secondary">
             Cargando solicitudes...
           </p>
+        ) : loadError ? (
+          <p role="alert" className="px-6 py-16 text-center text-sm text-danger">
+            {loadError}
+          </p>
         ) : solicitudes.length === 0 ? (
           <p className="px-6 py-16 text-center text-content-secondary">
-            No hay solicitudes en esta categoría
+            Sin solicitudes
           </p>
         ) : (
           <div className="overflow-x-auto">

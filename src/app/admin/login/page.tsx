@@ -8,6 +8,30 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Card } from '@/components/ui/Card';
 
+function getLoginErrorMessage(error: unknown) {
+  const code =
+    typeof error === 'object' && error !== null && 'code' in error &&
+    typeof error.code === 'string'
+      ? error.code
+      : '';
+  const name =
+    typeof error === 'object' && error !== null && 'name' in error &&
+    typeof error.name === 'string'
+      ? error.name
+      : '';
+
+  if (code === 'invalid_credentials') {
+    return 'El correo o la contraseña no son correctos.';
+  }
+  if (code === 'email_not_confirmed') {
+    return 'Confirma el correo electrónico de la cuenta antes de iniciar sesión.';
+  }
+  if (name === 'AuthRetryableFetchError') {
+    return 'No fue posible conectar con el servicio de autenticación. Revisa tu conexión e inténtalo de nuevo.';
+  }
+  return 'Ocurrió un problema al iniciar sesión. Inténtalo de nuevo.';
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const supabase = createClient();
@@ -29,15 +53,24 @@ export default function LoginPage() {
       });
 
       if (signInError) {
-        throw signInError;
+        console.error('Error de inicio de sesión administrativo:', signInError.code);
+        setError(getLoginErrorMessage(signInError));
+        return;
       }
 
       const {
         data: { user },
         error: userError,
       } = await supabase.auth.getUser();
-      if (userError) throw userError;
-      if (!user) throw new Error('No fue posible verificar la cuenta.');
+      if (userError) {
+        console.error('Error verificando la sesión administrativa:', userError.code);
+        setError('No fue posible verificar la sesión. Inténtalo de nuevo.');
+        return;
+      }
+      if (!user) {
+        setError('No fue posible verificar la sesión. Inténtalo de nuevo.');
+        return;
+      }
 
       const { data: adminUser, error: roleError } = await supabase
         .from('admin_users')
@@ -45,16 +78,30 @@ export default function LoginPage() {
         .eq('user_id', user.id)
         .maybeSingle();
 
-      if (roleError) throw roleError;
+      if (roleError) {
+        console.error('Error verificando permisos administrativos:', roleError.code);
+        setError('No fue posible verificar los permisos de esta cuenta. Inténtalo de nuevo.');
+        return;
+      }
       if (!adminUser) {
-        await supabase.auth.signOut();
-        throw new Error('Esta cuenta no está autorizada para acceder al panel.');
+        const { error: signOutError } = await supabase.auth.signOut();
+        if (signOutError) {
+          console.error('Error al cerrar sesión de una cuenta no autorizada:', signOutError.code);
+        }
+        setError('Esta cuenta no está autorizada para acceder al panel.');
+        return;
       }
 
       router.push('/admin');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
+      const code =
+        typeof err === 'object' && err !== null && 'code' in err &&
+        typeof err.code === 'string'
+          ? err.code
+          : undefined;
+      console.error('Error inesperado al iniciar sesión:', code ?? 'sin código');
+      setError(getLoginErrorMessage(err));
     } finally {
       setLoading(false);
     }

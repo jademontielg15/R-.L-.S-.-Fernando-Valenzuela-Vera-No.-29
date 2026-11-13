@@ -88,7 +88,7 @@ Las cuentas comunitarias no obtienen permisos administrativos automáticamente. 
 
 Para habilitar el panel:
 
-1. Aplicar la migración `0008_admin_roles.sql`.
+1. Aplicar las migraciones `0008_admin_roles.sql` y `0009_admin_registration_codes.sql`, en ese orden. Si `0008` ya está aplicada, ejecutar únicamente `0009`.
 2. Crear una cuenta normal para la persona que será el primer superadministrador y confirmar su correo.
 3. Un operador de confianza con acceso administrativo a Supabase debe asignar una sola vez el rol `super_admin` al UUID de esa cuenta en `public.admin_users`. Verificar que la consulta encuentre exactamente una cuenta confirmada:
 
@@ -102,9 +102,10 @@ Para habilitar el panel:
 
    Sustituir `CORREO_VERIFICADO` por el correo que el usuario ya confirmó y comprobar que se insertó exactamente una fila.
 4. Configurar la URL `${NEXT_PUBLIC_SITE_URL}/auth/callback` en las URL de redirección permitidas de Supabase Auth y habilitar el envío de invitaciones por correo.
-5. El superadministrador podrá invitar cuentas como `admin` o `super_admin` desde **Administrar cuentas**. Las cuentas nuevas recibirán un enlace para confirmar el correo y establecer su contraseña.
+5. Configurar `ADMIN_REGISTRATION_SETUP_SECRET` como variable de servidor en Vercel (sin prefijo `NEXT_PUBLIC_`), con al menos 32 caracteres aleatorios. Un operador de confianza genera códigos ligados a un correo en `/acceso/codigos` y los entrega por un canal privado.
+6. La persona autorizada usa su correo y código en `/admin/registro`. El código dura 48 horas y solo se puede usar una vez. Si el correo ya tiene una cuenta confirmada, se le asigna el rol `admin`; si no existe, Supabase envía una invitación para activar la cuenta. Este flujo no asigna `super_admin`.
 
-Los administradores pueden gestionar documentos, solicitudes e imágenes de la galería. Los superadministradores tienen esos permisos y además pueden invitar, promover y revocar cuentas administrativas. La base de datos impide revocar al último superadministrador.
+El código de alta evita esperar a que un superadministrador apruebe cada cuenta, pero solo el operador que conoce `ADMIN_REGISTRATION_SETUP_SECRET` puede emitirlo. No compartas esa clave ni los códigos públicamente. Los administradores pueden gestionar documentos, solicitudes e imágenes de la galería. Los superadministradores tienen esos permisos y además pueden invitar, promover y revocar cuentas administrativas. La base de datos impide revocar al último superadministrador.
 
 ## Estructura del Proyecto
 

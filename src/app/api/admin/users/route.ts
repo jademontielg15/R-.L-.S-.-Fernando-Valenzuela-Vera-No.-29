@@ -1,28 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentAdmin } from '@/lib/admin/auth';
+import { findAuthUserByEmail, USERS_PER_PAGE } from '@/lib/admin/users';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { SITE_URL } from '@/lib/constants';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const USERS_PER_PAGE = 1000;
-
-async function findAuthUserByEmail(
-  adminClient: ReturnType<typeof createAdminClient>,
-  email: string
-) {
-  for (let page = 1; ; page++) {
-    const { data, error } = await adminClient.auth.admin.listUsers({
-      page,
-      perPage: USERS_PER_PAGE,
-    });
-
-    if (error) throw error;
-
-    const user = data.users.find((item) => item.email?.toLowerCase() === email);
-    if (user) return user;
-    if (data.users.length < USERS_PER_PAGE) return null;
-  }
-}
 
 export async function GET() {
   try {

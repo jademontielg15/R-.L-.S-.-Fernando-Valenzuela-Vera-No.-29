@@ -25,8 +25,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [loading, setLoading] = useState(true);
   const [logoutError, setLogoutError] = useState<string | null>(null);
 
+  const isPublicAuthRoute = pathname === '/admin/login' || pathname === '/admin/registro';
+
   useEffect(() => {
-    if (pathname === '/admin/login') {
+    if (isPublicAuthRoute) {
       setUser(null);
       setRole(null);
       return;
@@ -90,7 +92,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       active = false;
       subscription.unsubscribe();
     };
-  }, [pathname, router, supabase]);
+  }, [isPublicAuthRoute, router, supabase]);
 
   const handleLogout = async () => {
     setLogoutError(null);
@@ -106,7 +108,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.refresh();
   };
 
-  if (pathname === '/admin/login') {
+  if (isPublicAuthRoute) {
     return <>{children}</>;
   }
 

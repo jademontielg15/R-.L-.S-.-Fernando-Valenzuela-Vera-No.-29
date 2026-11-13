@@ -19,9 +19,9 @@ export async function updateSession(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const pathname = request.nextUrl.pathname;
-  const isAdminLogin = pathname === '/admin/login';
+  const isPublicAdminRoute = pathname === '/admin/login' || pathname === '/admin/registro';
   const isProtectedAdminRoute =
-    pathname === '/admin' || (pathname.startsWith('/admin/') && !isAdminLogin);
+    pathname === '/admin' || (pathname.startsWith('/admin/') && !isPublicAdminRoute);
 
   if (!supabaseUrl || !supabaseAnonKey) {
     return isProtectedAdminRoute

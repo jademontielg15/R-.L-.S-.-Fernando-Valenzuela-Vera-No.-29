@@ -157,12 +157,11 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-7 border-t border-line-subtle pt-5 text-sm leading-relaxed text-content-muted">
-            El acceso administrativo requiere autorización. Para la primera cuenta, crea una cuenta normal en{' '}
-            <Link href="/registro" className="font-medium text-navy-800 underline underline-offset-4">
-              Registro
-            </Link>{' '}
-            y solicita al operador de confianza que la autorice. Después, un superadministrador podrá invitar
-            otras cuentas.
+            El acceso requiere una cuenta autorizada. Si recibiste un código privado, puedes{' '}
+            <Link href="/admin/registro" className="font-medium text-navy-800 underline underline-offset-4">
+              registrar tu cuenta administrativa
+            </Link>
+            . El primer superadministrador debe habilitarse mediante la configuración inicial del sitio.
           </p>
         </Card>
       </div>

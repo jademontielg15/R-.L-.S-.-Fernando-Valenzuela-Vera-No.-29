@@ -20,7 +20,7 @@ export default function RevistaPage() {
     <>
       <Hero
         title="Revista Institucional"
-        subtitle="Hemeroteca de publicaciones oficiales de la MRGLVM"
+        subtitle="Hemeroteca de publicaciones"
         backgroundDark={true}
       />
 

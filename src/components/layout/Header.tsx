@@ -13,7 +13,6 @@ const NAV = [
   { href: '/historia', label: 'Historia' },
   { href: '/masoneria', label: 'Masonería' },
   { href: '/revista', label: 'Revista' },
-  { href: '/knights-builders', label: 'Knights' },
   { href: '/contacto', label: 'Contacto' },
 ] as const;
 

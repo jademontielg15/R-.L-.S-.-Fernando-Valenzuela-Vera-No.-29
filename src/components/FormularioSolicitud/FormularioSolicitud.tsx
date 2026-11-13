@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Select } from '@/components/ui/Select';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Card } from '@/components/ui/Card';
+import { EMAIL_CONTACTO } from '@/lib/constants';
 
 const ESTADOS_MEXICO = [
   'Aguascalientes',
@@ -131,11 +132,10 @@ export const FormularioSolicitud = () => {
           <div>
             <h3 className="font-serif text-xl text-navy-800">¡Gracias por tu solicitud!</h3>
             <p className="mt-3 leading-relaxed text-content-secondary">
-              Hemos recibido tu solicitud de ingreso. Un miembro del Alto Cuerpo se pondrá en contacto contigo
-              en los próximos días para continuar con el proceso.
+              Tu solicitud fue enviada con éxito. Un hermano de la R:.L:.S:. Fernando Valenzuela Vera No. 29 se pondrá en contacto contigo.
             </p>
             <p className="mt-3 text-sm text-content-muted">
-              Si tienes preguntas, puedes escribirnos a contacto@mrglvm.com.mx
+              Si tienes preguntas, puedes escribirnos a {EMAIL_CONTACTO}
             </p>
             <Button variant="link" className="mt-5 px-0" onClick={() => setSubmitSuccess(false)}>
               Volver

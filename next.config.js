@@ -1,11 +1,27 @@
 /** @type {import('next').NextConfig} */
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseImagePattern = supabaseUrl
+  ? (() => {
+      const url = new URL(supabaseUrl);
+      return {
+        protocol: url.protocol.slice(0, -1),
+        hostname: url.hostname,
+        port: url.port,
+        pathname: '/storage/v1/object/public/imagenes-galeria/**',
+      };
+    })()
+  : null;
+
 const nextConfig = {
   reactStrictMode: true,
   // Las imagenes placeholder del sitio se sirven desde picsum.photos y se
   // consumen con next/image, que exige declarar el host. Sin esta entrada,
   // /nosotros y /knights-builders lanzaban 500 al renderizar.
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "picsum.photos" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "picsum.photos" },
+      ...(supabaseImagePattern ? [supabaseImagePattern] : []),
+    ],
     qualities: [75, 100],
   },
   redirects: async () => {

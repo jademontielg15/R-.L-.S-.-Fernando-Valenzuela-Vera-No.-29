@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string
+          role: 'admin' | 'super_admin'
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          role: 'admin' | 'super_admin'
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          role?: 'admin' | 'super_admin'
+          user_id?: string
+        }
+        Relationships: []
+      }
       categorias: {
         Row: {
           created_at: string | null
@@ -87,6 +105,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      galeria_imagenes: {
+        Row: {
+          alt: string
+          archivo_path: string
+          categoria: 'eventos' | 'fraternidad' | 'convivencias'
+          creado_en: string
+          descripcion: string | null
+          id: string
+          titulo: string
+          visible: boolean
+        }
+        Insert: {
+          alt: string
+          archivo_path: string
+          categoria: 'eventos' | 'fraternidad' | 'convivencias'
+          creado_en?: string
+          descripcion?: string | null
+          id?: string
+          titulo: string
+          visible?: boolean
+        }
+        Update: {
+          alt?: string
+          archivo_path?: string
+          categoria?: 'eventos' | 'fraternidad' | 'convivencias'
+          creado_en?: string
+          descripcion?: string | null
+          id?: string
+          titulo?: string
+          visible?: boolean
+        }
+        Relationships: []
       }
       solicitudes_ingreso: {
         Row: {

@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
-import { SeccionImagenTexto } from '@/components/SeccionImagenTexto';
 import { GaleriaImagenes } from '@/components/GaleriaImagenes';
-import { ANIO_FUNDACION } from '@/lib/constants';
+import { ANIO_FUNDACION, STORAGE_BUCKET_GALERIA } from '@/lib/constants';
+import { createClient } from '@/lib/supabase/server';
 
 export const metadata: Metadata = {
   title: 'Nosotros | FVV29',
@@ -13,8 +13,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function NosotrosPage() {
+export default async function NosotrosPage() {
   const aniosHistoria = new Date().getFullYear() - ANIO_FUNDACION;
+  const supabase = await createClient();
+  const { data: imagenesSubidas, error: errorGaleria } = await supabase
+    .from('galeria_imagenes')
+    .select('archivo_path, titulo, alt, descripcion, categoria')
+    .eq('visible', true)
+    .order('creado_en', { ascending: false });
+
+  if (errorGaleria) {
+    console.error('Error al cargar imágenes de la galería:', errorGaleria.message);
+  }
+
+  const imagenesPublicadas = (imagenesSubidas || []).map((imagen) => ({
+    url: supabase.storage
+      .from(STORAGE_BUCKET_GALERIA)
+      .getPublicUrl(imagen.archivo_path).data.publicUrl,
+    titulo: imagen.titulo,
+    alt: imagen.alt,
+    descripcion: imagen.descripcion || undefined,
+    categoria: imagen.categoria,
+  }));
 
   return (
     <>
@@ -30,8 +50,8 @@ export default function NosotrosPage() {
             de los valores masónicos: fraternidad, tolerancia, verdad y progreso.
           </p>
           <p>
-            Con más de una docena de logias activas en el Valle de México, nuestros miembros trabajan incansablemente
-            para mejorar la sociedad a través de la educación, la caridad y el mutuo apoyo.
+            Los hermanos de la R:.L:.S:. Fernando Valenzuela Vera No. 29 trabajan por los valores
+            masónicos de verdad, fraternidad y progreso social.
           </p>
           <p>
             Nos enorgullece contar con miembros de diversas profesiones y orígenes, todos unidos por el compromiso
@@ -40,23 +60,9 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      <SeccionImagenTexto
-        titulo="Alto Cuerpo Directivo"
-        descripcion="La administración de nuestra gran logia se realiza a través de un cuerpo directivo experimentado, elegido democráticamente por los miembros. Estos hermanos llevan a cabo la visión de nuestra institución."
-        imagenUrl="https://picsum.photos/seed/alto-cuerpo/600/400"
-        imagenAlt="Miembros del Alto Cuerpo Directivo"
-        puntos={[
-          'Gran Maestro: Liderazgo espiritual y administrativo',
-          'Primer Vigilante: Supervisión de rituales',
-          'Segundo Vigilante: Orden y disciplina',
-          'Tesorero: Administración financiera',
-          'Secretario: Registro y comunicación',
-          'Otros oficiales especializados',
-        ]}
-      />
-
       <GaleriaImagenes
         titulo="Memoria visual"
+        error={errorGaleria ? 'No fue posible cargar las imágenes nuevas de la galería.' : null}
         imagenes={[
           {
             url: '/images/galeria/imagen-01.jpeg',
@@ -106,6 +112,7 @@ export default function NosotrosPage() {
             descripcion: 'Reunión de miembros de la comunidad.',
             categoria: 'fraternidad',
           },
+          ...imagenesPublicadas,
         ]}
         columnas={4}
       />

@@ -16,6 +16,7 @@ interface GaleriaImagenesProps {
   imagenes: ImagenGaleria[];
   titulo?: string;
   columnas?: 2 | 3 | 4;
+  error?: string | null;
 }
 
 const GRID = {
@@ -41,6 +42,7 @@ export const GaleriaImagenes: React.FC<GaleriaImagenesProps> = ({
   imagenes,
   titulo,
   columnas = 3,
+  error,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<ImagenGaleria['categoria'] | 'todos'>('todos');
@@ -93,6 +95,11 @@ export const GaleriaImagenes: React.FC<GaleriaImagenesProps> = ({
     <section className="py-20 md:py-24">
       <div className="container mx-auto px-4">
         {titulo && <h2 className="rule-accent font-serif">{titulo}</h2>}
+        {error && (
+          <p role="alert" className="mt-4 text-sm text-danger">
+            {error}
+          </p>
+        )}
 
         <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filtrar memoria visual">
           {CATEGORY_FILTERS.map(({ value, label }) => (
@@ -204,10 +211,10 @@ export const GaleriaImagenes: React.FC<GaleriaImagenesProps> = ({
               </div>
 
               <Link
-                href={`/registro?redirect=${encodeURIComponent('/nosotros')}`}
+                href="/admin/login"
                 className="rounded bg-gold-500 px-4 py-2 text-sm font-medium text-navy-950 hover:bg-gold-400"
               >
-                Solicitar acceso para modificar
+                Acceso de administración
               </Link>
             </div>
           </div>

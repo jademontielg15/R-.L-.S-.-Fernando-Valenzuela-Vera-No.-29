@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { SITE_URL } from '@/lib/constants';
 
 interface SEOProps {
   title: string;
@@ -9,7 +10,7 @@ interface SEOProps {
 
 export function generateMetadata(props: SEOProps): Metadata {
   const { title, description, path = '', image } = props;
-  const baseUrl = 'https://mrglvm.com.mx';
+  const baseUrl = SITE_URL;
   const url = `${baseUrl}${path}`;
   const ogImage = image || `${baseUrl}/og-image.png`;
 
@@ -46,7 +47,7 @@ export function generateMetadata(props: SEOProps): Metadata {
 }
 
 export const DEFAULT_METADATA: Metadata = {
-  metadataBase: new URL('https://mrglvm.com.mx'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'R:.L:.S:. Fernando Valenzuela Vera No. 29',
     template: '%s | FVV29',

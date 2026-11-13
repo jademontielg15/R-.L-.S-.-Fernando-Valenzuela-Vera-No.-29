@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
+import { EMAIL_CONTACTO } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Aviso de Privacidad | FVV29',
@@ -95,7 +96,7 @@ export default function PrivacidadPage() {
           <Seccion numero={6} titulo="Ejercicio de Derechos">
             <p>
               Para ejercer cualquiera de los derechos mencionados, contacta a nuestro Oficial de Privacidad escribiendo
-              a contacto@mrglvm.com.mx, indicando claramente tu solicitud y proporcionando prueba de identidad.
+              a {EMAIL_CONTACTO}, indicando claramente tu solicitud y proporcionando prueba de identidad.
             </p>
           </Seccion>
 
@@ -108,7 +109,7 @@ export default function PrivacidadPage() {
 
           <Seccion numero={8} titulo="Contacto">
             <p>
-              Si tienes preguntas sobre esta política de privacidad, contacta a: contacto@mrglvm.com.mx
+              Si tienes preguntas sobre esta política de privacidad, contacta a: {EMAIL_CONTACTO}
             </p>
           </Seccion>
 

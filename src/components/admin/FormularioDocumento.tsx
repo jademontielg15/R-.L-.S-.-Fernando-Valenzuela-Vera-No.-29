@@ -84,7 +84,7 @@ export const FormularioDocumento: React.FC<FormularioDocumentoProps> = ({
         // Generar nombre único
         const timestamp = Date.now();
         const nombreArchivo = `${timestamp}-${archivo.name}`;
-        archivoPath = `${STORAGE_BUCKET_PDFS}/${nombreArchivo}`;
+        archivoPath = nombreArchivo;
 
         // Subir a Storage (necesita service_role para este ejemplo)
         // En producción, usarías una API route que maneja esto server-side

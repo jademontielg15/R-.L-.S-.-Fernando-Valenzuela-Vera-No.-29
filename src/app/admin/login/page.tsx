@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -31,7 +32,25 @@ export default function LoginPage() {
         throw signInError;
       }
 
-      // Login exitoso, redirigir al dashboard
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No fue posible verificar la cuenta.');
+
+      const { data: adminUser, error: roleError } = await supabase
+        .from('admin_users')
+        .select('role')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (roleError) throw roleError;
+      if (!adminUser) {
+        await supabase.auth.signOut();
+        throw new Error('Esta cuenta no está autorizada para acceder al panel.');
+      }
+
       router.push('/admin');
       router.refresh();
     } catch (err) {
@@ -47,7 +66,7 @@ export default function LoginPage() {
         <Card variant="elevated" className="p-8">
           <div className="border-b border-line-subtle pb-6">
             <p className="text-eyebrow uppercase text-gold-700">Panel de Administración</p>
-            <h1 className="mt-3 font-serif text-2xl text-navy-800">MRGLVM</h1>
+            <h1 className="mt-3 font-serif text-2xl text-navy-800">FVV29</h1>
             <p className="mt-2 text-sm text-content-muted">Acceso restringido a administradores</p>
           </div>
 
@@ -57,7 +76,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@mrglvm.mx"
+              placeholder="correo@ejemplo.com"
               autoComplete="email"
               required
               disabled={loading}
@@ -89,8 +108,12 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-7 border-t border-line-subtle pt-5 text-sm leading-relaxed text-content-muted">
-            Para acceder, necesitas credenciales de administrador. Contacta al responsable del sitio
-            si olvidaste tu contraseña.
+            El acceso administrativo requiere autorización. Para la primera cuenta, crea una cuenta normal en{' '}
+            <Link href="/registro" className="font-medium text-navy-800 underline underline-offset-4">
+              Registro
+            </Link>{' '}
+            y solicita al operador de confianza que la autorice. Después, un superadministrador podrá invitar
+            otras cuentas.
           </p>
         </Card>
       </div>

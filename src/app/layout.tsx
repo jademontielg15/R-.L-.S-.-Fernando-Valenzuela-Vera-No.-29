@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Source_Serif_4 } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { SITE_URL } from '@/lib/constants';
 import './globals.css';
 
 /**
@@ -25,7 +26,7 @@ const serif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://fvv29.com.mx'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'R:.L:.S:. Fernando Valenzuela Vera No. 29',
     template: '%s | FVV29',
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'es_MX',
-    url: 'https://fvv29.com.mx',
+    url: SITE_URL,
     title: 'R:.L:.S:. Fernando Valenzuela Vera No. 29',
     description: 'R:.L:.S:. Fernando Valenzuela Vera No. 29. Preservando la tradición masónica.',
     images: [

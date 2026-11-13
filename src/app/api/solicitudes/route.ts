@@ -80,7 +80,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: 'Solicitud recibida. Te contactaremos pronto.',
+        message:
+          'Tu solicitud fue enviada con éxito. Un hermano de la R:.L:.S:. Fernando Valenzuela Vera No. 29 se pondrá en contacto contigo.',
       },
       { status: 201 }
     );

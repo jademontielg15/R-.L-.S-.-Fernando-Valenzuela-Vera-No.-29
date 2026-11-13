@@ -82,6 +82,30 @@ npm run dev
 
 Abre http://localhost:3000 en tu navegador.
 
+## Administración segura
+
+Las cuentas comunitarias no obtienen permisos administrativos automáticamente. Los roles `admin` y `super_admin` se guardan en `public.admin_users`; las políticas RLS limitan solicitudes, documentos, Storage e imágenes a esas cuentas.
+
+Para habilitar el panel:
+
+1. Aplicar la migración `0008_admin_roles.sql`.
+2. Crear una cuenta normal para la persona que será el primer superadministrador y confirmar su correo.
+3. Un operador de confianza con acceso administrativo a Supabase debe asignar una sola vez el rol `super_admin` al UUID de esa cuenta en `public.admin_users`. Verificar que la consulta encuentre exactamente una cuenta confirmada:
+
+   ```sql
+   insert into public.admin_users (user_id, role)
+   select id, 'super_admin'
+   from auth.users
+   where lower(email) = lower('CORREO_VERIFICADO')
+     and email_confirmed_at is not null;
+   ```
+
+   Sustituir `CORREO_VERIFICADO` por el correo que el usuario ya confirmó y comprobar que se insertó exactamente una fila.
+4. Configurar la URL `${NEXT_PUBLIC_SITE_URL}/auth/callback` en las URL de redirección permitidas de Supabase Auth y habilitar el envío de invitaciones por correo.
+5. El superadministrador podrá invitar cuentas como `admin` o `super_admin` desde **Administrar cuentas**. Las cuentas nuevas recibirán un enlace para confirmar el correo y establecer su contraseña.
+
+Los administradores pueden gestionar documentos, solicitudes e imágenes de la galería. Los superadministradores tienen esos permisos y además pueden invitar, promover y revocar cuentas administrativas. La base de datos impide revocar al último superadministrador.
+
 ## Estructura del Proyecto
 
 ```

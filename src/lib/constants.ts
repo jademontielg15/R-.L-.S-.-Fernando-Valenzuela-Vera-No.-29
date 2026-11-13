@@ -3,6 +3,7 @@ export const ANIO_FUNDACION = 1980;
 
 // Storage bucket names
 export const STORAGE_BUCKET_PDFS = 'pdfs-institucionales';
+export const STORAGE_BUCKET_GALERIA = 'imagenes-galeria';
 
 // PDF settings
 export const PDF_SIGNED_URL_EXPIRY_SECONDS = 60; // 1 minute for security
@@ -10,9 +11,15 @@ export const PDF_SIGNED_URL_EXPIRY_SECONDS = 60; // 1 minute for security
 // Pagination
 export const ITEMS_PER_PAGE = 12;
 
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000');
+
 // Social media links (update with real URLs)
 export const SOCIAL_LINKS = {
-  facebook: 'https://facebook.com/mrglvm',
+  facebook: '',
   whatsapp: 'https://wa.me/5215551234567',
 };
 
@@ -22,3 +29,4 @@ export const ORG_SHORTNAME = 'R:.L:.S:. Fernando Valenzuela Vera No. 29';
 export const ORG_ADDRESS = 'Seccion 40, Cardenas Tabasco, Mexico';
 export const ORG_PHONE = '+52 (555) 123-4567';
 export const ORG_EMAIL = 'contacto@fvv29.com.mx';
+export const EMAIL_CONTACTO = 'contacto@pendiente.example';

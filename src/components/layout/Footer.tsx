@@ -19,6 +19,8 @@ const SOCIALES = [
   { href: SOCIAL_LINKS.whatsapp, label: 'WhatsApp', path: 'M13.9 10.6 19.4 4.5h-1.3l-4.8 5.3-3.8-5.3H5l5.8 8.1L5 19h1.3l5-5.6 4 5.6h4.5l-6-8.4Zm-1.8 2-.6-.8-4.6-6.4h2l3.7 5.2.6.8 4.9 6.8h-2l-4-5.6Z' },
 ] as const;
 
+const SOCIALES_CONFIGURADAS = SOCIALES.filter((red) => red.href);
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -59,7 +61,7 @@ export function Footer() {
             <span className="text-content-inverse">Dirección:</span> {ORG_ADDRESS}
           </p>
           <ul className="mt-6 flex gap-1">
-            {SOCIALES.map((red) => (
+            {SOCIALES_CONFIGURADAS.map((red) => (
               <li key={red.label}>
                 <a
                   href={red.href}

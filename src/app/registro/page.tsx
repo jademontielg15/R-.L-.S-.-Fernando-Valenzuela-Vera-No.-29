@@ -61,7 +61,7 @@ export default function RegistroPage() {
   return (
     <main className="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-16">
       <Card variant="elevated" className="w-full max-w-md p-8">
-        <p className="text-eyebrow uppercase text-gold-700">Comunidad MRGLVM</p>
+        <p className="text-eyebrow uppercase text-gold-700">Comunidad FVV29</p>
         <h1 className="mt-3 font-serif text-3xl text-navy-800">Crear una cuenta</h1>
         <p className="mt-3 text-sm leading-relaxed text-content-secondary">
           Regístrate para acceder a las funciones de la comunidad. Las cuentas nuevas comienzan con

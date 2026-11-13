@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase/server';
-
-const BASE_URL = 'https://fvv29.com.mx';
+import { SITE_URL } from '@/lib/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient();
@@ -9,55 +8,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Rutas estáticas
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${BASE_URL}/`,
+      url: `${SITE_URL}/`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${BASE_URL}/nosotros`,
+      url: `${SITE_URL}/nosotros`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/historia`,
+      url: `${SITE_URL}/historia`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/masoneria`,
+      url: `${SITE_URL}/masoneria`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/ingresa`,
+      url: `${SITE_URL}/ingresa`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/contacto`,
+      url: `${SITE_URL}/contacto`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/revista`,
+      url: `${SITE_URL}/revista`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/knights-builders`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/aviso-de-privacidad`,
+      url: `${SITE_URL}/aviso-de-privacidad`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.5,
@@ -73,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .order('actualizado_en', { ascending: false });
 
     const dinamicRoutes: MetadataRoute.Sitemap = (documentos || []).map((doc) => ({
-      url: `${BASE_URL}/revista/${doc.id}`,
+      url: `${SITE_URL}/revista/${doc.id}`,
       lastModified: new Date(doc.actualizado_en),
       changeFrequency: 'yearly' as const,
       priority: 0.7,

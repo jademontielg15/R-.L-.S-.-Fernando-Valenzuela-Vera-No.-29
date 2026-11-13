@@ -31,13 +31,6 @@ const ACCESOS = [
     href: '/revista',
     accion: 'Ver publicaciones',
   },
-  {
-    numero: '04',
-    titulo: 'Knights Builders',
-    descripcion: 'Formación, liderazgo y fraternidad para nuevas generaciones.',
-    href: '/knights-builders',
-    accion: 'Conocer Knights',
-  },
 ] as const;
 
 export default function Home() {

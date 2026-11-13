@@ -80,7 +80,9 @@ export default function LoginPage() {
 
       if (roleError) {
         console.error('Error verificando permisos administrativos:', roleError.code);
-        setError('No fue posible verificar los permisos de esta cuenta. Inténtalo de nuevo.');
+        setError(
+          'No fue posible consultar los permisos administrativos. Verifica que la migración 0008_admin_roles.sql esté aplicada en Supabase.'
+        );
         return;
       }
       if (!adminUser) {

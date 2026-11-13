@@ -26,6 +26,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [logoutError, setLogoutError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (pathname === '/admin/login') {
+      setUser(null);
+      setRole(null);
+      return;
+    }
+
+    let active = true;
+    setUser(null);
+    setRole(null);
+    setLoading(true);
+
     const checkSession = async () => {
       try {
         const {
@@ -35,7 +46,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         if (userError) throw userError;
         if (!authenticatedUser) {
-          router.replace('/admin/login');
+          if (active) router.replace('/admin/login');
           return;
         }
 
@@ -48,17 +59,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         if (roleError) throw roleError;
         if (!adminUser) {
           await supabase.auth.signOut();
-          router.replace('/admin/login');
+          if (active) router.replace('/admin/login');
           return;
         }
 
+        if (!active) return;
         setUser(authenticatedUser);
         setRole(adminUser.role as AdminRole);
       } catch (error) {
         console.error('Session check error:', error);
-        router.replace('/admin/login');
+        if (active) router.replace('/admin/login');
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
@@ -68,14 +80,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'SIGNED_OUT') {
+      if (event === 'SIGNED_OUT' && active) {
         router.replace('/');
         router.refresh();
       }
     });
 
-    return () => subscription?.unsubscribe();
-  }, [router, supabase]);
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+  }, [pathname, router, supabase]);
 
   const handleLogout = async () => {
     setLogoutError(null);
@@ -91,16 +106,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.refresh();
   };
 
-  if (loading) {
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
+
+  if (loading || !user || !role) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-surface-page">
         <p className="text-sm text-content-secondary">Verificando sesión...</p>
       </div>
     );
-  }
-
-  if (pathname === '/admin/login') {
-    return <>{children}</>;
   }
 
   if (role !== 'super_admin' && pathname.startsWith('/admin/usuarios')) {
